@@ -1,0 +1,579 @@
+openapi: 3.1.0
+info:
+  title: api-partners Applicants API
+  description: "Change log:<br>\n1.4.0 (2026-06-01)\n<ul>\n  <li>Signals: Added <code>productType</code> field to Signal response of <code>GET /applicants/{partnerApplicantId}/signals</code>. Values: <code>MCA</code>, <code>TERM_LOAN</code>, <code>LOC</code>.</li>\n</ul>\n1.3.0\n<ul>\n  <li>Webhooks: Added new event for completed batch estimations.</li>\n  <li>Applicants: Added endpoint to list pre-offer estimations for applicants.</li>\n  <li>Applicant Onboarding: Added asynchronous enrichment of applicant details after redirect journey to pre-fill onboarding data.</li>\n</ul>\n1.2.0\n<ul>\n  <li>Partners can now batch submit pre-offer estimations requests to pre-load Signals before applicants reach the UI.</li>\n</ul>\n1.1.0\n<ul>\n  <li>New endpoint to retrieve a list of all applications. Supports pagination and filtering.</li>\n  <li>Webhooks: Added support for real-time event notifications. Users can now register listener URLs to receive automated updates on Application changes and\n    expired Estimations.\n  </li>\n</ul>\n1.0.0 initial release"
+  version: 1.4.0
+servers:
+- url: https://dev.weareuncapped.com/api/partners
+  description: Sandbox server
+- url: https://portal.weareuncapped.com/api/partners
+  description: Production server
+security:
+- auth0_bearer:
+  - read
+  - write
+tags:
+- name: Applicants
+  description: Applicant API for external access
+paths:
+  /applicants/{partnerApplicantId}/enrichment/details:
+    put:
+      tags:
+      - Applicants
+      summary: Enrich applicant details
+      description: 'Allows partners to enrich applicant details by providing additional information.
+
+        **Partner Integration Guidelines:**
+
+        - Use ISO 8601 date format (yyyy-MM-dd)
+
+        - Use ISO 3166-1 alpha-3 country codes and nationality (e.g., USA, CAN, GBR, POL)
+
+        - Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)
+
+        - Applicant user id is required when any related user details fields are provided (email, first name, last name, personal phone number,
+
+        date of birth, address)
+
+        '
+      operationId: enrichApplicantDetails
+      parameters:
+      - name: partnerApplicantId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicantEnrichmentRequest'
+            example:
+              legalName: Test Company
+              companyRegistrationId: company-registration-id
+              mainRevenueSource: Amazon
+              mainStoreUrl: https://www.amazon.com/store/test
+              address:
+                addressLine1: Rode Drive 123
+                addressLine2: null
+                city: Los Angeles
+                zip: '90001'
+                stateRegion: CA
+                country: USA
+              applicantUsers:
+              - id: applicant-user-1
+                email: john@email.com
+                firstName: John
+                lastName: Doe
+                personalPhoneNumber: 123-456-7890
+                dateOfBirth: '1990-01-01'
+                nationality: USA
+                address:
+                  street: 123 Main St
+                  buildingNumber: '5'
+                  apartmentNumber: '40'
+                  city: Los Angeles
+                  zip: '90001'
+                  stateRegion: CA
+                  country: USA
+        required: true
+      responses:
+        '200':
+          description: Enrichment successful
+        '404':
+          description: Applicant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /applicants/{partnerApplicantId}/signals:
+    get:
+      tags:
+      - Applicants
+      summary: Get applicant signals
+      description: Retrieves signals associated with a specific applicant for a given partner.
+      operationId: getSignals
+      parameters:
+      - name: partnerApplicantId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: partnerApplicantUserId
+        in: query
+        required: true
+        schema:
+          type: string
+          minLength: 1
+      - name: locale
+        in: query
+        required: false
+        schema:
+          type: string
+          default: en_US
+      - name: highlights
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '200':
+          description: Get signals
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Signal'
+  /applicants/{partnerApplicantId}/estimations/pre-offers:
+    get:
+      tags:
+      - Applicants
+      summary: List pre-offer estimations for applicant
+      description: Returns a paginated list of all pre-offer estimations for the given applicant with optional filtering.
+      operationId: getPreOfferEstimations
+      parameters:
+      - name: partnerApplicantId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ELIGIBILITY_COMPLETE_DATA
+          - ELIGIBILITY_MINIMAL_DATA
+          - ELIGIBILITY_PENDING_VERIFICATION
+          - ELIGIBILITY_UNDEFINED
+          - ELIGIBILITY_DATA_INSUFFICIENT
+          - NON_ELIGIBLE
+          - COOLING_PERIOD
+      - name: productType
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - MCA
+          - TERM_LOAN
+          - LOC
+      - name: stage
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ACTIVE
+          - EXPIRED
+          - SUPERSEDED
+          - CONVERTED
+      - name: createdDateFrom
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: createdDateTo
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: page
+        in: query
+        description: Zero-based page index (0..N)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: size
+        in: query
+        description: The size of the page to be returned
+        required: false
+        schema:
+          type: integer
+          default: 50
+          minimum: 1
+      - name: sort
+        in: query
+        description: 'Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+        required: false
+        schema:
+          type: array
+          default:
+          - createdAt,DESC
+          items:
+            type: string
+      responses:
+        '200':
+          description: Pre-offer estimations found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PreOfferEstimationsPageResponse'
+        '404':
+          description: Applicant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /applicants/{partnerApplicantId}/applications:
+    get:
+      tags:
+      - Applicants
+      summary: List applications for applicant
+      description: Returns all applications for the given partnerApplicantId with optional status filtering and pagination.
+      operationId: getApplications
+      parameters:
+      - name: partnerApplicantId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - CREATED
+            - STARTED
+            - APPROVED
+            - REJECTED
+            - ACTIVE
+            - CLOSED
+            - ABANDONED
+      - name: page
+        in: query
+        description: Zero-based page index (0..N)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: size
+        in: query
+        description: The size of the page to be returned
+        required: false
+        schema:
+          type: integer
+          default: 50
+          minimum: 1
+      - name: sort
+        in: query
+        description: 'Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+        required: false
+        schema:
+          type: array
+          default:
+          - createdAt,DESC
+          items:
+            type: string
+      responses:
+        '200':
+          description: Applications found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApplicationsPageResponse'
+        '404':
+          description: Applicant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
+    ApplicantEnrichmentRequest:
+      type: object
+      properties:
+        legalName:
+          type: string
+        companyRegistrationId:
+          type: string
+        mainRevenueSource:
+          type: string
+          enum:
+          - Amazon
+          - Shopify
+          - Walmart
+          - Unknown
+        mainStoreUrl:
+          type: string
+        address:
+          $ref: '#/components/schemas/CompanyAddressDetails'
+        applicantUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicantUserDetails'
+    ApplicantUserDetails:
+      type: object
+      properties:
+        id:
+          type: string
+    CompanyAddressDetails:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        stateRegion:
+          type: string
+        country:
+          type: string
+          pattern: ^\p{Lu}{3}$
+    PreOfferEstimationListItemResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        partnerApplicantId:
+          type: string
+        productType:
+          type: string
+          enum:
+          - MCA
+          - TERM_LOAN
+          - LOC
+        status:
+          type: string
+          enum:
+          - ELIGIBILITY_COMPLETE_DATA
+          - ELIGIBILITY_MINIMAL_DATA
+          - ELIGIBILITY_PENDING_VERIFICATION
+          - ELIGIBILITY_UNDEFINED
+          - ELIGIBILITY_DATA_INSUFFICIENT
+          - NON_ELIGIBLE
+          - COOLING_PERIOD
+        createdDate:
+          type: string
+          format: date-time
+        expirationDate:
+          type: string
+          format: date
+        stage:
+          type: string
+          enum:
+          - ACTIVE
+          - EXPIRED
+          - SUPERSEDED
+          - CONVERTED
+        maxAmount:
+          type: number
+        currency:
+          type: string
+        maxTerm:
+          type: string
+        maxMonthlyFee:
+          type: number
+        minMonthlyFee:
+          type: number
+    SignalAction:
+      type: object
+      properties:
+        text:
+          type: string
+        url:
+          type: string
+    ExternalApplicationListItemResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - CREATED
+          - STARTED
+          - APPROVED
+          - REJECTED
+          - ACTIVE
+          - CLOSED
+          - ABANDONED
+        partnerApplicantId:
+          type: string
+        estimationId:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        applicantUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicantUserDetails'
+    Signal:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+          - PRE_OFFER
+          - APPLICATION
+        productType:
+          type: string
+          enum:
+          - MCA
+          - TERM_LOAN
+          - LOC
+        title:
+          type: string
+        description:
+          type: string
+        titleTemplate:
+          type: string
+        descriptionTemplate:
+          type: string
+        highlights:
+          type: array
+          items:
+            $ref: '#/components/schemas/SignalHighlight'
+        action:
+          type: array
+          items:
+            $ref: '#/components/schemas/SignalAction'
+    PreOfferEstimationsPageResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationListItemResponse'
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
+    ApplicationsPageResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalApplicationListItemResponse'
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    SignalHighlight:
+      type: object
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        type:
+          type: string
+          enum:
+          - text
+          - money
+          - percent
+          - date
+        value: {}
+  securitySchemes:
+    auth0_bearer:
+      type: http
+      name: authorization
+      scheme: bearer
+      bearerFormat: JWT

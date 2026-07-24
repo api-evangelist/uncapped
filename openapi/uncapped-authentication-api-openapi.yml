@@ -1,0 +1,95 @@
+openapi: 3.1.0
+info:
+  title: api-partners Applicants Authentication API
+  description: "Change log:<br>\n1.4.0 (2026-06-01)\n<ul>\n  <li>Signals: Added <code>productType</code> field to Signal response of <code>GET /applicants/{partnerApplicantId}/signals</code>. Values: <code>MCA</code>, <code>TERM_LOAN</code>, <code>LOC</code>.</li>\n</ul>\n1.3.0\n<ul>\n  <li>Webhooks: Added new event for completed batch estimations.</li>\n  <li>Applicants: Added endpoint to list pre-offer estimations for applicants.</li>\n  <li>Applicant Onboarding: Added asynchronous enrichment of applicant details after redirect journey to pre-fill onboarding data.</li>\n</ul>\n1.2.0\n<ul>\n  <li>Partners can now batch submit pre-offer estimations requests to pre-load Signals before applicants reach the UI.</li>\n</ul>\n1.1.0\n<ul>\n  <li>New endpoint to retrieve a list of all applications. Supports pagination and filtering.</li>\n  <li>Webhooks: Added support for real-time event notifications. Users can now register listener URLs to receive automated updates on Application changes and\n    expired Estimations.\n  </li>\n</ul>\n1.0.0 initial release"
+  version: 1.4.0
+servers:
+- url: https://dev.weareuncapped.com/api/partners
+  description: Sandbox server
+- url: https://portal.weareuncapped.com/api/partners
+  description: Production server
+security:
+- auth0_bearer:
+  - read
+  - write
+tags:
+- name: Authentication
+  description: Authentication API for external access
+paths:
+  /partner/authentication/token:
+    post:
+      tags:
+      - Authentication
+      summary: Issue access token
+      description: Authenticates the partner using the provided JWT token and issues an access token. The access token can be used in the Authorization header as 'Bearer {accessToken}' for subsequent API calls.
+      operationId: issueAccessToken
+      requestBody:
+        description: JWT token containing client id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+        required: true
+      responses:
+        '200':
+          description: Successfully authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Bad Request - Missing body or invalid JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    TokenRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          minLength: 1
+      required:
+      - token
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          minLength: 1
+      required:
+      - accessToken
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
+  securitySchemes:
+    auth0_bearer:
+      type: http
+      name: authorization
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,385 @@
+openapi: 3.1.0
+info:
+  title: api-partners Applicants Webhook Subscriptions API
+  description: "Change log:<br>\n1.4.0 (2026-06-01)\n<ul>\n  <li>Signals: Added <code>productType</code> field to Signal response of <code>GET /applicants/{partnerApplicantId}/signals</code>. Values: <code>MCA</code>, <code>TERM_LOAN</code>, <code>LOC</code>.</li>\n</ul>\n1.3.0\n<ul>\n  <li>Webhooks: Added new event for completed batch estimations.</li>\n  <li>Applicants: Added endpoint to list pre-offer estimations for applicants.</li>\n  <li>Applicant Onboarding: Added asynchronous enrichment of applicant details after redirect journey to pre-fill onboarding data.</li>\n</ul>\n1.2.0\n<ul>\n  <li>Partners can now batch submit pre-offer estimations requests to pre-load Signals before applicants reach the UI.</li>\n</ul>\n1.1.0\n<ul>\n  <li>New endpoint to retrieve a list of all applications. Supports pagination and filtering.</li>\n  <li>Webhooks: Added support for real-time event notifications. Users can now register listener URLs to receive automated updates on Application changes and\n    expired Estimations.\n  </li>\n</ul>\n1.0.0 initial release"
+  version: 1.4.0
+servers:
+- url: https://dev.weareuncapped.com/api/partners
+  description: Sandbox server
+- url: https://portal.weareuncapped.com/api/partners
+  description: Production server
+security:
+- auth0_bearer:
+  - read
+  - write
+tags:
+- name: Webhook Subscriptions
+  description: Webhook Subscriptions API for external access
+paths:
+  /webhooks/subscriptions:
+    get:
+      tags:
+      - Webhook Subscriptions
+      summary: Get all webhook subscriptions for a partner
+      description: Retrieve all webhook subscriptions associated for the specified partner
+      operationId: getAllSubscriptions
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ACTIVE
+            - INACTIVE
+      - name: eventType
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - APPLICATION_STATUS_CHANGED
+            - ESTIMATION_EXPIRED
+            - ESTIMATION_BATCH_COMPLETED
+      - name: page
+        in: query
+        description: Zero-based page index (0..N)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: size
+        in: query
+        description: The size of the page to be returned
+        required: false
+        schema:
+          type: integer
+          default: 20
+          minimum: 1
+      - name: sort
+        in: query
+        description: 'Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved webhook subscriptions
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/WebhookSubscriptionPageableResponse'
+        '401':
+          description: Unauthorized access - Invalid tokenized request. Caller is not a partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+      - Webhook Subscriptions
+      summary: Create a webhook subscription for a partner
+      description: Create a new webhook subscription for the specified partner
+      operationId: createSubscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriptionCreateRequest'
+            example:
+              eventType: ESTIMATION_EXPIRED
+              url: https://acme.com/webooks
+        required: true
+      responses:
+        '201':
+          description: Webhook subscription successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscriptionResponse'
+              example:
+                eventType: ESTIMATION_EXPIRED
+                url: https://acme.com/webooks
+                status: ACTIVE
+                createdAt: '2026-02-19T12:00:00Z'
+                updatedAt: null
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized access - Invalid tokenized request. Caller is not a partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Webhook subscription for given event type already exists for a partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /webhooks/subscriptions/{eventType}/deactivate:
+    post:
+      tags:
+      - Webhook Subscriptions
+      summary: Deactivate a webhook subscription for a partner
+      description: Deactivate an existing webhook subscription for the specified partner
+      operationId: deactivateSubscription
+      parameters:
+      - name: eventType
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - APPLICATION_STATUS_CHANGED
+          - ESTIMATION_EXPIRED
+          - ESTIMATION_BATCH_COMPLETED
+      responses:
+        '204':
+          description: Webhook subscription successfully deactivated
+        '401':
+          description: Unauthorized access - Invalid tokenized request. Caller is not a partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Unable to deactivate already inactive subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Webhook subscription for a given event type not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /webhooks/subscriptions/{eventType}/activate:
+    post:
+      tags:
+      - Webhook Subscriptions
+      summary: Activate a webhook subscription for a partner
+      description: Activate an existing webhook subscription for the specified partner
+      operationId: activateSubscription
+      parameters:
+      - name: eventType
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - APPLICATION_STATUS_CHANGED
+          - ESTIMATION_EXPIRED
+          - ESTIMATION_BATCH_COMPLETED
+      responses:
+        '204':
+          description: Webhook subscription successfully activated
+        '401':
+          description: Unauthorized access - Invalid tokenized request. Caller is not a partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Unable to activate already active subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Webhook subscription for a given event type not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /webhooks/subscriptions/{eventType}:
+    delete:
+      tags:
+      - Webhook Subscriptions
+      summary: Delete a webhook subscription for a partner
+      description: Delete an existing webhook subscription for the specified partner
+      operationId: deleteSubscription
+      parameters:
+      - name: eventType
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - APPLICATION_STATUS_CHANGED
+          - ESTIMATION_EXPIRED
+          - ESTIMATION_BATCH_COMPLETED
+      responses:
+        '204':
+          description: Webhook subscription successfully deleted
+        '401':
+          description: Unauthorized access - Invalid tokenized request. Caller is not a partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Webhook subscription for a given event type not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      tags:
+      - Webhook Subscriptions
+      summary: Update a webhook subscription for a partner
+      description: Update an existing webhook subscription for the specified partner
+      operationId: updateSubscription
+      parameters:
+      - name: eventType
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - APPLICATION_STATUS_CHANGED
+          - ESTIMATION_EXPIRED
+          - ESTIMATION_BATCH_COMPLETED
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookSubscriptionUpdateRequest'
+            example:
+              url: https://acme.com/webooks
+        required: true
+      responses:
+        '200':
+          description: Webhook subscription successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookSubscriptionResponse'
+              example:
+                eventType: ESTIMATION_EXPIRED
+                url: https://acme.com/webooks
+                status: ACTIVE
+                createdAt: '2026-02-19T12:00:00Z'
+                updatedAt: '2026-02-19T13:00:00Z'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized access - Invalid tokenized request. Caller is not a partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Webhook subscription for a given event type not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    WebhookSubscriptionResponse:
+      type: object
+      properties:
+        eventType:
+          type: string
+          enum:
+          - APPLICATION_STATUS_CHANGED
+          - ESTIMATION_EXPIRED
+          - ESTIMATION_BATCH_COMPLETED
+        url:
+          type: string
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
+    WebhookSubscriptionCreateRequest:
+      type: object
+      properties:
+        eventType:
+          type: string
+          enum:
+          - APPLICATION_STATUS_CHANGED
+          - ESTIMATION_EXPIRED
+          - ESTIMATION_BATCH_COMPLETED
+        url:
+          type: string
+          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
+      required:
+      - eventType
+    WebhookSubscriptionUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
+      required:
+      - url
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
+    WebhookSubscriptionPageableResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookSubscriptionResponse'
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+  securitySchemes:
+    auth0_bearer:
+      type: http
+      name: authorization
+      scheme: bearer
+      bearerFormat: JWT

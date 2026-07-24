@@ -1,0 +1,341 @@
+openapi: 3.1.0
+info:
+  title: api-partners Applicants Estimations API
+  description: "Change log:<br>\n1.4.0 (2026-06-01)\n<ul>\n  <li>Signals: Added <code>productType</code> field to Signal response of <code>GET /applicants/{partnerApplicantId}/signals</code>. Values: <code>MCA</code>, <code>TERM_LOAN</code>, <code>LOC</code>.</li>\n</ul>\n1.3.0\n<ul>\n  <li>Webhooks: Added new event for completed batch estimations.</li>\n  <li>Applicants: Added endpoint to list pre-offer estimations for applicants.</li>\n  <li>Applicant Onboarding: Added asynchronous enrichment of applicant details after redirect journey to pre-fill onboarding data.</li>\n</ul>\n1.2.0\n<ul>\n  <li>Partners can now batch submit pre-offer estimations requests to pre-load Signals before applicants reach the UI.</li>\n</ul>\n1.1.0\n<ul>\n  <li>New endpoint to retrieve a list of all applications. Supports pagination and filtering.</li>\n  <li>Webhooks: Added support for real-time event notifications. Users can now register listener URLs to receive automated updates on Application changes and\n    expired Estimations.\n  </li>\n</ul>\n1.0.0 initial release"
+  version: 1.4.0
+servers:
+- url: https://dev.weareuncapped.com/api/partners
+  description: Sandbox server
+- url: https://portal.weareuncapped.com/api/partners
+  description: Production server
+security:
+- auth0_bearer:
+  - read
+  - write
+tags:
+- name: Estimations
+  description: Estimations API for external access
+paths:
+  /estimations/pre-offers:
+    post:
+      tags:
+      - Estimations
+      summary: Generate pre-offer estimations
+      description: 'Generates pre-offer estimations based on partner applicant performance data.
+
+
+        **Revenue Data:**
+
+        - Submit revenue figures grouped by source (e.g., AMAZON, SHOPIFY)
+
+        - Each source contains an array of revenue figures
+
+
+        **Currency Determination:**
+
+        - Currency is automatically determined from country code (e.g., USA→ USD)
+
+        - Uses ISO 3166-1 alpha-2 to ISO 4217 mapping
+
+        - Revenue currency from figures is used for calculations, but response currency comes from country
+
+
+        **Partner Integration Guidelines:**
+
+        - Use ISO 8601 date format (yyyy-MM-dd)
+
+        - Use ISO 4217 currency codes (e.g., USD, EUR, GBP)
+
+        - Use ISO 3166-1 alpha-3 country codes (e.g., USA, CAN, GBR, POL)
+
+        - Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)
+
+        '
+      operationId: generatePreOfferEstimation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreOfferEstimationRequest'
+            example:
+              partnerApplicantId: partner-applicant-1
+              applicantData:
+                legalStructure: LLC
+                country: USA
+                state: CA
+              applicantPerformance:
+                revenueFigures:
+                - source: Amazon
+                  figures:
+                  - date: '2025-10-13'
+                    amount: 2000
+                    currency: USD
+                  - date: '2025-10-14'
+                    amount: 2000
+                    currency: USD
+        required: true
+      responses:
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '200':
+          description: Pre-offer estimation generated successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PreOfferEstimationResponse'
+  /estimations/pre-offers/batch:
+    post:
+      tags:
+      - Estimations
+      summary: Schedule pre-offer estimations batch
+      description: 'Schedules a batch of pre-offer estimations based on partner applicant performance data.
+
+
+        **Revenue Data:**
+
+        - Submit revenue figures grouped by source (e.g., AMAZON, SHOPIFY)
+
+        - Each source contains an array of revenue figures
+
+
+        **Currency Determination:**
+
+        - Currency is automatically determined from country code (e.g., USA→ USD)
+
+        - Uses ISO 3166-1 alpha-2 to ISO 4217 mapping
+
+        - Revenue currency from figures is used for calculations, but response currency comes from country
+
+
+        **Partner Integration Guidelines:**
+
+        - Use ISO 8601 date format (yyyy-MM-dd)
+
+        - Use ISO 4217 currency codes (e.g., USD, EUR, GBP)
+
+        - Use ISO 3166-1 alpha-3 country codes (e.g., USA, CAN, GBR, POL)
+
+        - Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)
+
+        '
+      operationId: handlePreOfferEstimationBatch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreOfferEstimationBatchRequest'
+            example:
+              estimationRequests:
+              - partnerApplicantId: partner-applicant-1
+                applicantData:
+                  legalStructure: LLC
+                  country: USA
+                  state: CA
+                applicantPerformance:
+                  revenueFigures:
+                  - source: Amazon
+                    figures:
+                    - date: '2025-10-13'
+                      amount: 2000
+                      currency: USD
+                    - date: '2025-10-14'
+                      amount: 2000
+                      currency: USD
+              - partnerApplicantId: partner-applicant-2
+                applicantData:
+                  legalStructure: LLC
+                  country: USA
+                  state: CA
+                applicantPerformance:
+                  revenueFigures:
+                  - source: Shopify
+                    figures:
+                    - date: '2025-10-13'
+                      amount: 1000
+                      currency: USD
+                    - date: '2025-10-14'
+                      amount: 1000
+                      currency: USD
+        required: true
+      responses:
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '200':
+          description: Pre-offer estimation batch scheduled successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PreOfferEstimationBatchResponse'
+components:
+  schemas:
+    PreOfferEstimationResponse:
+      type: object
+      properties:
+        partnerApplicantId:
+          type: string
+        preOffersEstimations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationDto'
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
+    RevenueSource:
+      type: object
+      properties:
+        source:
+          type: string
+          enum:
+          - Amazon
+          - Shopify
+          - Walmart
+          - Unknown
+        figures:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevenueFigure'
+    ApplicantPerformanceData:
+      type: object
+      properties:
+        revenueFigures:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevenueSource'
+    PreOfferEstimationDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        productType:
+          type: string
+          enum:
+          - MCA
+          - TERM_LOAN
+          - LOC
+        status:
+          type: string
+          enum:
+          - ELIGIBILITY_COMPLETE_DATA
+          - ELIGIBILITY_MINIMAL_DATA
+          - ELIGIBILITY_PENDING_VERIFICATION
+          - ELIGIBILITY_UNDEFINED
+          - ELIGIBILITY_DATA_INSUFFICIENT
+          - NON_ELIGIBLE
+          - COOLING_PERIOD
+        expirationDate:
+          type: string
+          format: date
+        maxAmount:
+          type: number
+        currency:
+          type: string
+        maxTerm:
+          type: string
+        maxMonthlyFee:
+          type: number
+        minMonthlyFee:
+          type: number
+        amount:
+          type: number
+        creditLimit:
+          type: number
+    PreOfferEstimationRequest:
+      type: object
+      properties:
+        partnerApplicantId:
+          type: string
+          minLength: 1
+        applicantData:
+          $ref: '#/components/schemas/ApplicantData'
+        applicantPerformance:
+          $ref: '#/components/schemas/ApplicantPerformanceData'
+      required:
+      - partnerApplicantId
+    ApplicantData:
+      type: object
+      properties:
+        legalStructure:
+          type: string
+          enum:
+          - LLC
+          - Sole Proprietorship
+          - Unknown
+        country:
+          type: string
+          pattern: ^\p{Lu}{3}$
+        state:
+          type: string
+          pattern: ^\p{Lu}{2}$
+    PreOfferEstimationBatchRequest:
+      type: object
+      properties:
+        estimationRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationRequest'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
+    PreOfferEstimationBatchResponse:
+      type: object
+      properties:
+        batchId:
+          type: string
+          format: uuid
+    RevenueFigure:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        amount:
+          type: number
+          minimum: 0.0
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+      required:
+      - amount
+      - currency
+      - date
+  securitySchemes:
+    auth0_bearer:
+      type: http
+      name: authorization
+      scheme: bearer
+      bearerFormat: JWT
