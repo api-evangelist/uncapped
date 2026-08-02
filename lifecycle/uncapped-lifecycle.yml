@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: searched
+source: https://status.weareuncapped.com + https://developers.weareuncapped.com/changelog
+versioning:
+  scheme: semver on the API document (info.version)
+  current: 1.4.0
+  docs: https://developers.weareuncapped.com/changelog
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No published deprecation policy or Sunset/Deprecation header support found on the Developer Hub.
+sla:
+  url: null
+status_page: https://status.weareuncapped.com
+changelog: changelog/uncapped-changelog.yml
+deprecated_operations: []

@@ -1,0 +1,67 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/uncapped-partners-openapi-original.json + https://developers.weareuncapped.com (Developer Hub)
+description: >-
+  Cross-cutting request/response conventions of the Uncapped Partners API,
+  derived from the provider's published OpenAPI 3.1 document and Developer Hub.
+base_url: https://portal.weareuncapped.com/api/partners
+sandbox_url: https://dev.weareuncapped.com/api/partners
+api_style: REST over HTTPS, JSON requests and responses
+
+authentication:
+  scheme: Bearer JWT (auth0_bearer security scheme)
+  flow: >-
+    POST /partner/authentication/token (issueAccessToken) exchanges a signed
+    partner JWT containing the client id for a short-lived access token, sent
+    as 'Authorization: Bearer {accessToken}' on subsequent calls.
+  detail: authentication/uncapped-authentication.yml
+
+idempotency:
+  supported: false
+  notes: No idempotency-key mechanism is documented in the OpenAPI or Developer Hub.
+
+pagination:
+  style: page-based (zero-indexed page/size/sort query parameters)
+  request_params:
+    page: zero-based page index (0..N), default 0
+    size: page size, default 20 (webhook subscriptions) or 50 (estimations, applications)
+    sort: 'property,(asc|desc) - multiple sort criteria supported; default createdAt,DESC on list endpoints'
+  response_fields:
+    content: array of results
+    page: current page index
+    size: page size
+    totalElements: total result count
+    totalPages: total page count
+  source_operations: [getAllSubscriptions, getPreOfferEstimations, getApplications]
+
+field_expansion:
+  supported: false
+  notes: No expand/sparse-field mechanism documented; getSignals supports boolean 'highlights' and 'locale' query toggles.
+
+metadata:
+  supported: false
+
+request_tracing:
+  documented: false
+
+versioning:
+  scheme: semver on the API document (info.version, current 1.4.0); no version segment in resource paths
+  changelog: changelog/uncapped-changelog.yml
+
+error_envelope:
+  media_type: application/json
+  shape: '{message, code, details[{code, message, fieldName}]}'
+  detail: errors/uncapped-problem-types.yml
+
+rate_limiting:
+  documented: false
+  notes: No rate-limit headers or limits documented in the OpenAPI or Developer Hub.
+
+data_conventions:
+  dates: ISO 8601 (yyyy-MM-dd)
+  currencies: ISO 4217 codes (USD, EUR, GBP); currency auto-determined from country code
+  countries: ISO 3166-1 alpha-3 codes (USA, CAN, GBR, POL)
+  states: ISO 3166-2 state codes (CA, NY, TX, ON)
+  partner_header: XX-PARTNER-ID header parameter defined in components.parameters
+
+webhooks: asyncapi/uncapped-webhooks.yml

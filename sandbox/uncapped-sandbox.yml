@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/uncapped-partners-openapi-original.json (servers[]) + https://developers.weareuncapped.com/scalar-init.js
+description: >-
+  The Uncapped Partners API publishes a dedicated sandbox server alongside
+  production. The Developer Hub's API reference playground is restricted to the
+  sandbox server by design - the production endpoint is intentionally not
+  browser-accessible (its CORS allowlist excludes browser docs sites) and real
+  production traffic should be driven from server-side code.
+environments:
+- name: Sandbox
+  base_url: https://dev.weareuncapped.com/api/partners
+  notes: Used by the Developer Hub API reference playground; same authentication flow (partner JWT exchanged for an access token via issueAccessToken).
+- name: Production
+  base_url: https://portal.weareuncapped.com/api/partners
+  notes: Server-side only; not browser-accessible by design.
+test_credentials:
+  documented: false
+  notes: Partner JWT credentials are issued per-partner; no public magic test values are documented.

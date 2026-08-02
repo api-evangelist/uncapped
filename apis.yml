@@ -1,25 +1,154 @@
 aid: uncapped
 name: Uncapped
-description: Uncapped is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1
+description: >-
+  Uncapped provides working capital to online businesses, offering revenue-based
+  financing products including merchant cash advances (MCA), term loans, and
+  lines of credit (LOC). Through the Uncapped Partners API, platforms and
+  marketplaces can embed business funding directly into their product without
+  taking on origination, compliance, or servicing - submitting anonymised
+  applicant performance data, generating pre-offer estimations, displaying
+  ready-to-use funding Signals in their UI, and reacting to application and
+  estimation lifecycle events via webhooks.
 url: https://raw.githubusercontent.com/api-evangelist/uncapped/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://developers.weareuncapped.com/apple-touch-icon.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - seedcamp
-x-tier: stub
-x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- Fintech
+- Lending
+- Embedded Finance
+- Revenue-Based Financing
+- Working Capital
+- eCommerce
+apis:
+- aid: uncapped:uncapped-applicants-api
+  name: Uncapped Applicants API
+  description: Applicant API for external access
+  humanURL: https://developers.weareuncapped.com/api-reference
+  baseURL: https://portal.weareuncapped.com/api/partners
+  tags:
+  - Applicants
+  properties:
+  - type: OpenAPI
+    url: openapi/uncapped-applicants-api-openapi.yml
+  - type: APIReference
+    url: https://developers.weareuncapped.com/api-reference
+- aid: uncapped:uncapped-applications-api
+  name: Uncapped Applications API
+  description: Application API for external access
+  humanURL: https://developers.weareuncapped.com/api-reference
+  baseURL: https://portal.weareuncapped.com/api/partners
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/uncapped-applications-api-openapi.yml
+  - type: APIReference
+    url: https://developers.weareuncapped.com/api-reference
+- aid: uncapped:uncapped-authentication-api
+  name: Uncapped Authentication API
+  description: Authentication API for external access
+  humanURL: https://developers.weareuncapped.com/api-reference
+  baseURL: https://portal.weareuncapped.com/api/partners
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/uncapped-authentication-api-openapi.yml
+  - type: APIReference
+    url: https://developers.weareuncapped.com/api-reference
+- aid: uncapped:uncapped-estimations-api
+  name: Uncapped Estimations API
+  description: Estimations API for external access
+  humanURL: https://developers.weareuncapped.com/api-reference
+  baseURL: https://portal.weareuncapped.com/api/partners
+  tags:
+  - Estimations
+  properties:
+  - type: OpenAPI
+    url: openapi/uncapped-estimations-api-openapi.yml
+  - type: APIReference
+    url: https://developers.weareuncapped.com/api-reference
+- aid: uncapped:uncapped-webhook-subscriptions-api
+  name: Uncapped Webhook Subscriptions API
+  description: Webhook Subscriptions API for external access
+  humanURL: https://developers.weareuncapped.com/api-reference
+  baseURL: https://portal.weareuncapped.com/api/partners
+  tags:
+  - Webhook Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/uncapped-webhook-subscriptions-api-openapi.yml
+  - type: APIReference
+    url: https://developers.weareuncapped.com/api-reference
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/uncapped-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/uncapped-agentic-access.yml
+- type: Authentication
+  url: authentication/uncapped-authentication.yml
 - type: Website
-  url: http://weareuncapped.com
+  url: https://weareuncapped.com
+- type: DeveloperPortal
+  url: https://developers.weareuncapped.com
+- type: Documentation
+  url: https://developers.weareuncapped.com/guides
+- type: GettingStarted
+  url: https://developers.weareuncapped.com/guides
+- type: APIReference
+  url: https://developers.weareuncapped.com/api-reference
+- type: ChangeLog
+  url: changelog/uncapped-changelog.yml
+- type: StatusPage
+  url: https://status.weareuncapped.com
+- type: GitHubOrganization
+  url: https://github.com/weareuncapped-com
+- type: Webhooks
+  url: asyncapi/uncapped-webhooks.yml
+- type: ErrorCatalog
+  url: errors/uncapped-problem-types.yml
+- type: Conventions
+  url: conventions/uncapped-conventions.yml
+- type: Lifecycle
+  url: lifecycle/uncapped-lifecycle.yml
+- type: Sandbox
+  url: sandbox/uncapped-sandbox.yml
+- type: Conformance
+  url: conformance/uncapped-conformance.yml
+- type: DataModel
+  url: data-model/uncapped-data-model.yml
+- type: MCPServer
+  url: mcp/uncapped-mcp.yml
+- type: LLMsTxt
+  url: llms/uncapped-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml

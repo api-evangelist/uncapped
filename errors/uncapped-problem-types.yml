@@ -1,0 +1,65 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/uncapped-partners-openapi-original.json
+format: custom-envelope
+envelope:
+  media_type: application/json
+  schema: ErrorResponse
+  fields:
+    message: Human-readable error message
+    code: Machine-readable error code (e.g. AUTHENTICATION_REQUIRED)
+    details: Array of {code, message, fieldName} items for field-level validation errors
+  observed_example:
+    message: 'Authentication required: Full authentication is required to access this resource'
+    code: AUTHENTICATION_REQUIRED
+    details: []
+problems:
+- status: 400
+  title: Invalid request data / invalid request parameters
+  source_operations:
+  - enrichApplicantDetails
+  - createSubscription
+  - updateSubscription
+  - issueAccessToken
+  - generatePreOfferEstimation
+  - handlePreOfferEstimationBatch
+  - getPreOfferEstimations
+  - getApplications
+  - getSignals
+- status: 401
+  title: Access denied / unauthorized - invalid tokenized request, caller is not a partner
+  source_operations:
+  - enrichApplicantDetails
+  - getAllSubscriptions
+  - createSubscription
+  - deactivateSubscription
+  - activateSubscription
+  - issueAccessToken
+  - generatePreOfferEstimation
+  - handlePreOfferEstimationBatch
+  - deleteSubscription
+  - updateSubscription
+  - getSignals
+  - getPreOfferEstimations
+  - getApplications
+- status: 403
+  title: Forbidden access
+  source_operations:
+  - getApplication
+- status: 404
+  title: Resource not found (applicant, application, or webhook subscription for a given event type)
+  source_operations:
+  - enrichApplicantDetails
+  - deactivateSubscription
+  - activateSubscription
+  - deleteSubscription
+  - updateSubscription
+  - getApplication
+  - getPreOfferEstimations
+  - getApplications
+- status: 409
+  title: Conflict - subscription already exists for event type, or activate/deactivate on a subscription already in that state
+  source_operations:
+  - createSubscription
+  - deactivateSubscription
+  - activateSubscription

@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: searched
+description: >-
+  Probe record of the /.well-known/ discovery surface across Uncapped hosts.
+  No real well-known documents were found: weareuncapped.com returns 404s
+  (behind a Cloudflare challenge), and the developers/dev/portal hosts return
+  their SPA shell (HTML fallback) for every well-known path rather than actual
+  documents. No pointer is wired for this artifact because nothing genuine was
+  discovered.
+hosts:
+- host: https://weareuncapped.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://developers.weareuncapped.com
+  documents:
+  - {path: /.well-known/security.txt, status: 200, note: SPA HTML fallback, not a real security.txt}
+  - {path: /.well-known/api-catalog, status: 200, note: SPA HTML fallback, not a real api-catalog}
+  - {path: /llms.txt, status: 200, note: SPA HTML fallback, not a real llms.txt}
+- host: https://dev.weareuncapped.com
+  documents:
+  - {path: /.well-known/security.txt, status: 200, note: SPA HTML fallback}
+  - {path: /.well-known/openid-configuration, status: 200, note: SPA HTML fallback}
+- host: https://portal.weareuncapped.com
+  documents:
+  - {path: /.well-known/security.txt, status: 200, note: SPA HTML fallback}
+  - {path: /.well-known/openid-configuration, status: 200, note: SPA HTML fallback}

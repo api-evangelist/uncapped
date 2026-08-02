@@ -1,0 +1,39 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/uncapped-partners-openapi-original.json (Webhook Subscriptions tag) + https://developers.weareuncapped.com/changelog
+spec_type: Webhooks
+description: >-
+  The Uncapped Partners API webhook surface. No AsyncAPI document is published;
+  this catalog is captured from the Webhook Subscriptions endpoints and event
+  enums in the provider's own OpenAPI. Partners register one listener URL per
+  event type and manage subscription lifecycle (create, update, activate,
+  deactivate, delete) through the API.
+management:
+  style: API-managed subscriptions (one subscription per event type per partner)
+  endpoints:
+  - operationId: getAllSubscriptions
+    method: GET
+    path: /webhooks/subscriptions
+  - operationId: createSubscription
+    method: POST
+    path: /webhooks/subscriptions
+  - operationId: updateSubscription
+    method: PATCH
+    path: /webhooks/subscriptions/{eventType}
+  - operationId: deleteSubscription
+    method: DELETE
+    path: /webhooks/subscriptions/{eventType}
+  - operationId: activateSubscription
+    method: POST
+    path: /webhooks/subscriptions/{eventType}/activate
+  - operationId: deactivateSubscription
+    method: POST
+    path: /webhooks/subscriptions/{eventType}/deactivate
+  subscription_states: [ACTIVE, INACTIVE]
+events:
+- event: APPLICATION_STATUS_CHANGED
+  description: Fired when a funding application changes status (application statuses include CREATED, STARTED, APPROVED, REJECTED, ACTIVE, CLOSED, ABANDONED).
+- event: ESTIMATION_EXPIRED
+  description: Fired when a pre-offer estimation expires.
+- event: ESTIMATION_BATCH_COMPLETED
+  description: Fired when a batch submitted via POST /estimations/pre-offers/batch finishes processing (added in v1.3.0).

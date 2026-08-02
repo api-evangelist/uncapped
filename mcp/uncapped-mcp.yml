@@ -1,0 +1,55 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/uncapped-partners-openapi-original.json
+description: >-
+  No official Uncapped MCP server was found (the Developer Hub's Scalar
+  reference explicitly disables its MCP feature). This is a candidate tool
+  list derived one-to-one from the published OpenAPI operations.
+server:
+  name: uncapped
+  transport: http
+  url: null
+tools:
+- name: issue_access_token
+  description: Exchange a signed partner JWT for a short-lived access token
+  source_operation: openapi/uncapped-partners-openapi-original.json#issueAccessToken
+- name: enrich_applicant_details
+  description: Enrich applicant details with company and applicant-user information
+  source_operation: openapi/uncapped-partners-openapi-original.json#enrichApplicantDetails
+- name: generate_pre_offer_estimation
+  description: Generate pre-offer estimations from applicant performance data
+  source_operation: openapi/uncapped-partners-openapi-original.json#generatePreOfferEstimation
+- name: handle_pre_offer_estimation_batch
+  description: Schedule a batch of pre-offer estimations
+  source_operation: openapi/uncapped-partners-openapi-original.json#handlePreOfferEstimationBatch
+- name: get_pre_offer_estimations
+  description: List pre-offer estimations for an applicant with filtering and pagination
+  source_operation: openapi/uncapped-partners-openapi-original.json#getPreOfferEstimations
+- name: get_signals
+  description: Retrieve display-ready funding Signals for an applicant
+  source_operation: openapi/uncapped-partners-openapi-original.json#getSignals
+- name: get_application
+  description: Get funding application details by application id
+  source_operation: openapi/uncapped-partners-openapi-original.json#getApplication
+- name: get_applications
+  description: List applications for an applicant with status filtering and pagination
+  source_operation: openapi/uncapped-partners-openapi-original.json#getApplications
+- name: get_all_subscriptions
+  description: List webhook subscriptions for the partner
+  source_operation: openapi/uncapped-partners-openapi-original.json#getAllSubscriptions
+- name: create_subscription
+  description: Create a webhook subscription for an event type
+  source_operation: openapi/uncapped-partners-openapi-original.json#createSubscription
+- name: update_subscription
+  description: Update the listener URL of a webhook subscription
+  source_operation: openapi/uncapped-partners-openapi-original.json#updateSubscription
+- name: activate_subscription
+  description: Activate a webhook subscription
+  source_operation: openapi/uncapped-partners-openapi-original.json#activateSubscription
+- name: deactivate_subscription
+  description: Deactivate a webhook subscription
+  source_operation: openapi/uncapped-partners-openapi-original.json#deactivateSubscription
+- name: delete_subscription
+  description: Delete a webhook subscription
+  source_operation: openapi/uncapped-partners-openapi-original.json#deleteSubscription

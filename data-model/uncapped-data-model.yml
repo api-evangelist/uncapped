@@ -1,0 +1,75 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/uncapped-partners-openapi-original.json
+description: >-
+  Entity-relationship graph of the Uncapped Partners API, derived from schema
+  $ref links and id-reference fields in the published OpenAPI.
+entities:
+- name: Partner
+  id_field: XX-PARTNER-ID header / client id inside the signed partner JWT
+  notes: The authenticated caller; owns applicants, webhook subscriptions, and estimations.
+- name: Applicant
+  id_field: partnerApplicantId (partner-scoped identifier)
+  notes: A business seeking funding; enriched via enrichApplicantDetails with company + applicant-user details.
+- name: ApplicantUser
+  id_field: id (partner-scoped applicant user id)
+  notes: A person attached to an applicant (email, name, phone, date of birth, nationality, address).
+- name: PreOfferEstimation
+  id_field: id (uuid)
+  notes: 'Pre-offer generated from applicant performance data; productType: MCA | TERM_LOAN | LOC; stage: ACTIVE | EXPIRED | SUPERSEDED | CONVERTED.'
+- name: EstimationBatch
+  id_field: batchId (uuid)
+  notes: Asynchronous batch of pre-offer estimation requests; completion signaled by ESTIMATION_BATCH_COMPLETED webhook.
+- name: Application
+  id_field: id / applicationId
+  notes: 'Funding application; status: CREATED | STARTED | APPROVED | REJECTED | ACTIVE | CLOSED | ABANDONED.'
+- name: Signal
+  id_field: id
+  notes: 'Ready-to-display UI unit (type: PRE_OFFER | APPLICATION) with highlights and actions.'
+- name: WebhookSubscription
+  id_field: eventType (one subscription per event type per partner)
+  notes: 'Listener registration; status: ACTIVE | INACTIVE.'
+- name: RevenueSource
+  id_field: source (Amazon | Shopify | Walmart | Unknown)
+  notes: Group of dated revenue figures submitted as applicant performance data.
+relationships:
+- from: Partner
+  to: Applicant
+  kind: has_many
+  via: partnerApplicantId
+- from: Partner
+  to: WebhookSubscription
+  kind: has_many
+  via: eventType
+- from: Applicant
+  to: ApplicantUser
+  kind: has_many
+  via: applicantUsers[]
+- from: Applicant
+  to: PreOfferEstimation
+  kind: has_many
+  via: getPreOfferEstimations (partnerApplicantId)
+- from: Applicant
+  to: Application
+  kind: has_many
+  via: getApplications (partnerApplicantId)
+- from: Applicant
+  to: Signal
+  kind: has_many
+  via: getSignals (partnerApplicantId + partnerApplicantUserId)
+- from: Application
+  to: PreOfferEstimation
+  kind: belongs_to
+  via: estimationId
+- from: Application
+  to: ApplicantUser
+  kind: has_many
+  via: applicantUsers[]
+- from: EstimationBatch
+  to: PreOfferEstimation
+  kind: has_many
+  via: estimationRequests[]
+- from: PreOfferEstimation
+  to: Signal
+  kind: has_one
+  via: Signal.type == PRE_OFFER

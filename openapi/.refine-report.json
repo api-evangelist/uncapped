@@ -1,0 +1,22 @@
+{
+  "provider": "uncapped",
+  "sources": [
+    "uncapped-applicants-api-openapi.yml",
+    "uncapped-applications-api-openapi.yml",
+    "uncapped-authentication-api-openapi.yml",
+    "uncapped-estimations-api-openapi.yml",
+    "uncapped-webhook-subscriptions-api-openapi.yml"
+  ],
+  "outputs": [
+    "uncapped-applicants-api-openapi.yml",
+    "uncapped-applications-api-openapi.yml",
+    "uncapped-authentication-api-openapi.yml",
+    "uncapped-estimations-api-openapi.yml",
+    "uncapped-webhook-subscriptions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

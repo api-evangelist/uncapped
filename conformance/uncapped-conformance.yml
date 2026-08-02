@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/uncapped-partners-openapi-original.json
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: Published API document declares openapi 3.1.0
+- id: oauth2
+  conforms: false
+  evidence: Security scheme is http bearer (JWT), not OAuth 2.0 flows; token issued via POST /partner/authentication/token JWT exchange
+- id: oidc
+  conforms: false
+  evidence: No openIdConnect security scheme and no live openid-configuration discovery document on any API host
+- id: jwt-bearer-auth
+  conforms: true
+  evidence: auth0_bearer securityScheme type http, scheme bearer, bearerFormat JWT
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use a custom application/json envelope {message, code, details[]} (ErrorResponse schema), not application/problem+json
+- id: pagination
+  conforms: true
+  evidence: Zero-based page/size/sort query parameters with content/page/size/totalElements/totalPages response envelope on list operations
+- id: idempotency
+  conforms: false
+  evidence: No idempotency-key mechanism documented
+- id: iso-8601-dates
+  conforms: true
+  evidence: Partner Integration Guidelines require ISO 8601 date format (yyyy-MM-dd)
+- id: iso-4217-currencies
+  conforms: true
+  evidence: Partner Integration Guidelines require ISO 4217 currency codes; RevenueFigure.currency pattern ^[A-Z]{3}$
+- id: iso-3166-countries
+  conforms: true
+  evidence: Partner Integration Guidelines require ISO 3166-1 alpha-3 country codes and ISO 3166-2 state codes
+- id: webhooks
+  conforms: true
+  evidence: API-managed webhook subscriptions with three event types (see asyncapi/uncapped-webhooks.yml)

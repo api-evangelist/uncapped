@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/uncapped-partners-openapi-original.json
+skills:
+- file: uncapped-estimate-and-display-signals.md
+  name: Generate a pre-offer estimation and display funding Signals
+  api: openapi/uncapped-partners-openapi-original.json
+  operations: [issueAccessToken, generatePreOfferEstimation, getSignals]
+- file: uncapped-batch-estimations-with-webhooks.md
+  name: Pre-load Signals for a cohort with batch estimations and webhooks
+  api: openapi/uncapped-partners-openapi-original.json
+  operations: [issueAccessToken, createSubscription, handlePreOfferEstimationBatch, getPreOfferEstimations]
+- file: uncapped-track-applications.md
+  name: Track funding applications end to end
+  api: openapi/uncapped-partners-openapi-original.json
+  operations: [issueAccessToken, createSubscription, enrichApplicantDetails, getApplications, getApplication]

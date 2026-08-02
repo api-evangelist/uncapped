@@ -1,0 +1,28 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Uncapped Partners API
+  version: 1.0.0
+extends: openapi/uncapped-partners-openapi-original.json
+actions:
+- target: $.info
+  description: Give the API document a human-readable title (upstream uses the internal service name api-partners) and tag the APIs.io catalog metadata.
+  update:
+    title: Uncapped Partners API
+    x-apisio-provider: uncapped
+    x-apisio-artifact: openapi/uncapped-partners-openapi-original.json
+- target: $.info
+  description: Replace the embedded HTML changelog description with a concise intro (the changelog is captured separately in changelog/uncapped-changelog.yml).
+  update:
+    x-apievangelist-summary: >-
+      Embed lending into a platform: exchange a partner JWT for an access
+      token, submit applicant performance data for pre-offer estimations
+      (single or batch), fetch display-ready Signals, track applications, and
+      manage webhook subscriptions.
+- target: $.components.securitySchemes.auth0_bearer
+  description: The upstream bearer scheme carries an invalid 'name' field (only valid for apiKey schemes); the Developer Hub's own Scalar loader strips it before rendering.
+  update:
+    x-apievangelist-note: upstream declares name+scopes on an http bearer scheme; strip for strict validators
+- target: $.paths['/partner/authentication/token'].post
+  description: The token endpoint issues tokens and does not itself require bearer auth (mirrors the Developer Hub's Scalar configuration).
+  update:
+    security: []
