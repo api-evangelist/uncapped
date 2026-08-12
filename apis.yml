@@ -110,6 +110,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/uncapped-partners-overlay.yaml
 - type: DomainSecurity
   url: security/uncapped-domain-security.yml
 - type: AgenticAccess
