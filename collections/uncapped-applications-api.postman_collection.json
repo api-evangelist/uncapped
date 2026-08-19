@@ -1,0 +1,241 @@
+{
+  "item": [
+    {
+      "id": "ec98b6ef-bced-490b-8a06-8d88938e2b46",
+      "name": "Applications",
+      "description": {
+        "content": "Application API for external access",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "889793d6-d2b1-47c0-99d0-50a7d7896d5f",
+          "name": "Get application details",
+          "request": {
+            "name": "Get application details",
+            "description": {
+              "content": "Retrieves application details by application ID. Requires trusted or partner authorization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":applicationId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "953569a9-3a48-4130-bd67-99639916e4ca",
+              "name": "Application successfully created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"CLOSED\",\n  \"partnerApplicantId\": \"string\",\n  \"estimationId\": \"string\",\n  \"applicantUsers\": [\n    {\n      \"id\": \"string\"\n    },\n    {\n      \"id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c512eedc-8b76-413e-a2f8-1d5014621959",
+              "name": "Forbidden access",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33525c4a-01fb-4f7b-8f68-b26c6cdab429",
+              "name": "Application not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":applicationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dev.weareuncapped.com/api/partners",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "53a5f1d3-ce44-4130-94db-f185ebafa281",
+    "name": "api-partners Applicants Applications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Change log:<br>\n1.4.0 (2026-06-01)\n<ul>\n  <li>Signals: Added <code>productType</code> field to Signal response of <code>GET /applicants/{partnerApplicantId}/signals</code>. Values: <code>MCA</code>, <code>TERM_LOAN</code>, <code>LOC</code>.</li>\n</ul>\n1.3.0\n<ul>\n  <li>Webhooks: Added new event for completed batch estimations.</li>\n  <li>Applicants: Added endpoint to list pre-offer estimations for applicants.</li>\n  <li>Applicant Onboarding: Added asynchronous enrichment of applicant details after redirect journey to pre-fill onboarding data.</li>\n</ul>\n1.2.0\n<ul>\n  <li>Partners can now batch submit pre-offer estimations requests to pre-load Signals before applicants reach the UI.</li>\n</ul>\n1.1.0\n<ul>\n  <li>New endpoint to retrieve a list of all applications. Supports pagination and filtering.</li>\n  <li>Webhooks: Added support for real-time event notifications. Users can now register listener URLs to receive automated updates on Application changes and\n    expired Estimations.\n  </li>\n</ul>\n1.0.0 initial release",
+      "type": "text/plain"
+    }
+  }
+}

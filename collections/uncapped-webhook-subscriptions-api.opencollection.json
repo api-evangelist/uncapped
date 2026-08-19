@@ -1,0 +1,156 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "api-partners Applicants Webhook Subscriptions API",
+    "version": "1.4.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhook Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all webhook subscriptions for a partner",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.weareuncapped.com/api/partners/webhooks/subscriptions",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "eventType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page index (0..N)"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The size of the page to be returned"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported."
+              }
+            ]
+          },
+          "docs": "Retrieve all webhook subscriptions associated for the specified partner"
+        },
+        {
+          "info": {
+            "name": "Create a webhook subscription for a partner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.weareuncapped.com/api/partners/webhooks/subscriptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new webhook subscription for the specified partner"
+        },
+        {
+          "info": {
+            "name": "Deactivate a webhook subscription for a partner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.weareuncapped.com/api/partners/webhooks/subscriptions/:eventType/deactivate",
+            "params": [
+              {
+                "name": "eventType",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deactivate an existing webhook subscription for the specified partner"
+        },
+        {
+          "info": {
+            "name": "Activate a webhook subscription for a partner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.weareuncapped.com/api/partners/webhooks/subscriptions/:eventType/activate",
+            "params": [
+              {
+                "name": "eventType",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Activate an existing webhook subscription for the specified partner"
+        },
+        {
+          "info": {
+            "name": "Update a webhook subscription for a partner",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dev.weareuncapped.com/api/partners/webhooks/subscriptions/:eventType",
+            "params": [
+              {
+                "name": "eventType",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing webhook subscription for the specified partner"
+        },
+        {
+          "info": {
+            "name": "Delete a webhook subscription for a partner",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.weareuncapped.com/api/partners/webhooks/subscriptions/:eventType",
+            "params": [
+              {
+                "name": "eventType",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing webhook subscription for the specified partner"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

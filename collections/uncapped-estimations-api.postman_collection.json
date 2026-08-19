@@ -1,0 +1,455 @@
+{
+  "item": [
+    {
+      "id": "3fbec0eb-a472-4baa-8b36-557724fcb68d",
+      "name": "Estimations",
+      "description": {
+        "content": "Estimations API for external access",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "32c47f8f-9123-4b51-9da7-788d5736a389",
+          "name": "Generate pre-offer estimations",
+          "request": {
+            "name": "Generate pre-offer estimations",
+            "description": {
+              "content": "Generates pre-offer estimations based on partner applicant performance data.\n\n**Revenue Data:**\n- Submit revenue figures grouped by source (e.g., AMAZON, SHOPIFY)\n- Each source contains an array of revenue figures\n\n**Currency Determination:**\n- Currency is automatically determined from country code (e.g., USA→ USD)\n- Uses ISO 3166-1 alpha-2 to ISO 4217 mapping\n- Revenue currency from figures is used for calculations, but response currency comes from country\n\n**Partner Integration Guidelines:**\n- Use ISO 8601 date format (yyyy-MM-dd)\n- Use ISO 4217 currency codes (e.g., USD, EUR, GBP)\n- Use ISO 3166-1 alpha-3 country codes (e.g., USA, CAN, GBR, POL)\n- Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "estimations",
+                "pre-offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"partnerApplicantId\": \"<string>\",\n  \"applicantData\": {\n    \"legalStructure\": \"<string>\",\n    \"country\": \"<string>\",\n    \"state\": \"<string>\"\n  },\n  \"applicantPerformance\": {\n    \"revenueFigures\": [\n      {\n        \"source\": \"<string>\",\n        \"figures\": [\n          {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\",\n            \"date\": \"<date>\"\n          },\n          {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\",\n            \"date\": \"<date>\"\n          }\n        ]\n      },\n      {\n        \"source\": \"<string>\",\n        \"figures\": [\n          {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\",\n            \"date\": \"<date>\"\n          },\n          {\n            \"amount\": \"<number>\",\n            \"currency\": \"<string>\",\n            \"date\": \"<date>\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "647f7463-0e31-46f8-947c-9fe393ac5fb1",
+              "name": "Pre-offer estimation generated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "estimations",
+                    "pre-offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"partnerApplicantId\": \"partner-applicant-1\",\n  \"applicantData\": {\n    \"legalStructure\": \"LLC\",\n    \"country\": \"USA\",\n    \"state\": \"CA\"\n  },\n  \"applicantPerformance\": {\n    \"revenueFigures\": [\n      {\n        \"source\": \"Amazon\",\n        \"figures\": [\n          {\n            \"date\": \"2025-10-13\",\n            \"amount\": 2000,\n            \"currency\": \"USD\"\n          },\n          {\n            \"date\": \"2025-10-14\",\n            \"amount\": 2000,\n            \"currency\": \"USD\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"partnerApplicantId\": \"string\",\n  \"preOffersEstimations\": [\n    {\n      \"id\": \"657d7afe-589a-0fb8-79dd-113349665df2\",\n      \"productType\": \"LOC\",\n      \"status\": \"NON_ELIGIBLE\",\n      \"expirationDate\": \"1996-08-31\",\n      \"maxAmount\": 4543.919363105663,\n      \"currency\": \"string\",\n      \"maxTerm\": \"string\",\n      \"maxMonthlyFee\": 7012.546081801231,\n      \"minMonthlyFee\": 3667.2029112951323,\n      \"amount\": 3378.317850116116,\n      \"creditLimit\": 2200.7590245704478\n    },\n    {\n      \"id\": \"adcdb41e-46ea-4159-ba78-edb3deb12043\",\n      \"productType\": \"MCA\",\n      \"status\": \"NON_ELIGIBLE\",\n      \"expirationDate\": \"2014-12-29\",\n      \"maxAmount\": 3094.85058959591,\n      \"currency\": \"string\",\n      \"maxTerm\": \"string\",\n      \"maxMonthlyFee\": 7778.4996467494175,\n      \"minMonthlyFee\": 6855.397805771363,\n      \"amount\": 1560.1598655686998,\n      \"creditLimit\": 6785.789227250847\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce7aa696-8f96-4f86-b2a9-501e108241c5",
+              "name": "Invalid request data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "estimations",
+                    "pre-offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"partnerApplicantId\": \"partner-applicant-1\",\n  \"applicantData\": {\n    \"legalStructure\": \"LLC\",\n    \"country\": \"USA\",\n    \"state\": \"CA\"\n  },\n  \"applicantPerformance\": {\n    \"revenueFigures\": [\n      {\n        \"source\": \"Amazon\",\n        \"figures\": [\n          {\n            \"date\": \"2025-10-13\",\n            \"amount\": 2000,\n            \"currency\": \"USD\"\n          },\n          {\n            \"date\": \"2025-10-14\",\n            \"amount\": 2000,\n            \"currency\": \"USD\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb07fa9a-fc02-45ec-bde3-efc56c29748d",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "estimations",
+                    "pre-offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"partnerApplicantId\": \"partner-applicant-1\",\n  \"applicantData\": {\n    \"legalStructure\": \"LLC\",\n    \"country\": \"USA\",\n    \"state\": \"CA\"\n  },\n  \"applicantPerformance\": {\n    \"revenueFigures\": [\n      {\n        \"source\": \"Amazon\",\n        \"figures\": [\n          {\n            \"date\": \"2025-10-13\",\n            \"amount\": 2000,\n            \"currency\": \"USD\"\n          },\n          {\n            \"date\": \"2025-10-14\",\n            \"amount\": 2000,\n            \"currency\": \"USD\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1c1e70f-5d74-4e7c-9bb8-8ab4a8f3965e",
+          "name": "Schedule pre-offer estimations batch",
+          "request": {
+            "name": "Schedule pre-offer estimations batch",
+            "description": {
+              "content": "Schedules a batch of pre-offer estimations based on partner applicant performance data.\n\n**Revenue Data:**\n- Submit revenue figures grouped by source (e.g., AMAZON, SHOPIFY)\n- Each source contains an array of revenue figures\n\n**Currency Determination:**\n- Currency is automatically determined from country code (e.g., USA→ USD)\n- Uses ISO 3166-1 alpha-2 to ISO 4217 mapping\n- Revenue currency from figures is used for calculations, but response currency comes from country\n\n**Partner Integration Guidelines:**\n- Use ISO 8601 date format (yyyy-MM-dd)\n- Use ISO 4217 currency codes (e.g., USD, EUR, GBP)\n- Use ISO 3166-1 alpha-3 country codes (e.g., USA, CAN, GBR, POL)\n- Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "estimations",
+                "pre-offers",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estimationRequests\": [\n    {\n      \"partnerApplicantId\": \"<string>\",\n      \"applicantData\": {\n        \"legalStructure\": \"<string>\",\n        \"country\": \"<string>\",\n        \"state\": \"<string>\"\n      },\n      \"applicantPerformance\": {\n        \"revenueFigures\": [\n          {\n            \"source\": \"<string>\",\n            \"figures\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"source\": \"<string>\",\n            \"figures\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    },\n    {\n      \"partnerApplicantId\": \"<string>\",\n      \"applicantData\": {\n        \"legalStructure\": \"<string>\",\n        \"country\": \"<string>\",\n        \"state\": \"<string>\"\n      },\n      \"applicantPerformance\": {\n        \"revenueFigures\": [\n          {\n            \"source\": \"<string>\",\n            \"figures\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"source\": \"<string>\",\n            \"figures\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4dfd24eb-4e07-467a-9c23-3f3e4744bcb8",
+              "name": "Pre-offer estimation batch scheduled successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "estimations",
+                    "pre-offers",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"estimationRequests\": [\n    {\n      \"partnerApplicantId\": \"partner-applicant-1\",\n      \"applicantData\": {\n        \"legalStructure\": \"LLC\",\n        \"country\": \"USA\",\n        \"state\": \"CA\"\n      },\n      \"applicantPerformance\": {\n        \"revenueFigures\": [\n          {\n            \"source\": \"Amazon\",\n            \"figures\": [\n              {\n                \"date\": \"2025-10-13\",\n                \"amount\": 2000,\n                \"currency\": \"USD\"\n              },\n              {\n                \"date\": \"2025-10-14\",\n                \"amount\": 2000,\n                \"currency\": \"USD\"\n              }\n            ]\n          }\n        ]\n      }\n    },\n    {\n      \"partnerApplicantId\": \"partner-applicant-2\",\n      \"applicantData\": {\n        \"legalStructure\": \"LLC\",\n        \"country\": \"USA\",\n        \"state\": \"CA\"\n      },\n      \"applicantPerformance\": {\n        \"revenueFigures\": [\n          {\n            \"source\": \"Shopify\",\n            \"figures\": [\n              {\n                \"date\": \"2025-10-13\",\n                \"amount\": 1000,\n                \"currency\": \"USD\"\n              },\n              {\n                \"date\": \"2025-10-14\",\n                \"amount\": 1000,\n                \"currency\": \"USD\"\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"batchId\": \"0493a6fb-1c49-ff17-3dbd-97bfff3bb90f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cd5bf80-dd27-42a8-8b6f-84264c4e5461",
+              "name": "Invalid request data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "estimations",
+                    "pre-offers",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"estimationRequests\": [\n    {\n      \"partnerApplicantId\": \"partner-applicant-1\",\n      \"applicantData\": {\n        \"legalStructure\": \"LLC\",\n        \"country\": \"USA\",\n        \"state\": \"CA\"\n      },\n      \"applicantPerformance\": {\n        \"revenueFigures\": [\n          {\n            \"source\": \"Amazon\",\n            \"figures\": [\n              {\n                \"date\": \"2025-10-13\",\n                \"amount\": 2000,\n                \"currency\": \"USD\"\n              },\n              {\n                \"date\": \"2025-10-14\",\n                \"amount\": 2000,\n                \"currency\": \"USD\"\n              }\n            ]\n          }\n        ]\n      }\n    },\n    {\n      \"partnerApplicantId\": \"partner-applicant-2\",\n      \"applicantData\": {\n        \"legalStructure\": \"LLC\",\n        \"country\": \"USA\",\n        \"state\": \"CA\"\n      },\n      \"applicantPerformance\": {\n        \"revenueFigures\": [\n          {\n            \"source\": \"Shopify\",\n            \"figures\": [\n              {\n                \"date\": \"2025-10-13\",\n                \"amount\": 1000,\n                \"currency\": \"USD\"\n              },\n              {\n                \"date\": \"2025-10-14\",\n                \"amount\": 1000,\n                \"currency\": \"USD\"\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa261b78-c6a1-4673-bc98-956ac46859d8",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "estimations",
+                    "pre-offers",
+                    "batch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"estimationRequests\": [\n    {\n      \"partnerApplicantId\": \"partner-applicant-1\",\n      \"applicantData\": {\n        \"legalStructure\": \"LLC\",\n        \"country\": \"USA\",\n        \"state\": \"CA\"\n      },\n      \"applicantPerformance\": {\n        \"revenueFigures\": [\n          {\n            \"source\": \"Amazon\",\n            \"figures\": [\n              {\n                \"date\": \"2025-10-13\",\n                \"amount\": 2000,\n                \"currency\": \"USD\"\n              },\n              {\n                \"date\": \"2025-10-14\",\n                \"amount\": 2000,\n                \"currency\": \"USD\"\n              }\n            ]\n          }\n        ]\n      }\n    },\n    {\n      \"partnerApplicantId\": \"partner-applicant-2\",\n      \"applicantData\": {\n        \"legalStructure\": \"LLC\",\n        \"country\": \"USA\",\n        \"state\": \"CA\"\n      },\n      \"applicantPerformance\": {\n        \"revenueFigures\": [\n          {\n            \"source\": \"Shopify\",\n            \"figures\": [\n              {\n                \"date\": \"2025-10-13\",\n                \"amount\": 1000,\n                \"currency\": \"USD\"\n              },\n              {\n                \"date\": \"2025-10-14\",\n                \"amount\": 1000,\n                \"currency\": \"USD\"\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dev.weareuncapped.com/api/partners",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f14f88c2-da73-4214-bbc5-b464cbe24514",
+    "name": "api-partners Applicants Estimations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Change log:<br>\n1.4.0 (2026-06-01)\n<ul>\n  <li>Signals: Added <code>productType</code> field to Signal response of <code>GET /applicants/{partnerApplicantId}/signals</code>. Values: <code>MCA</code>, <code>TERM_LOAN</code>, <code>LOC</code>.</li>\n</ul>\n1.3.0\n<ul>\n  <li>Webhooks: Added new event for completed batch estimations.</li>\n  <li>Applicants: Added endpoint to list pre-offer estimations for applicants.</li>\n  <li>Applicant Onboarding: Added asynchronous enrichment of applicant details after redirect journey to pre-fill onboarding data.</li>\n</ul>\n1.2.0\n<ul>\n  <li>Partners can now batch submit pre-offer estimations requests to pre-load Signals before applicants reach the UI.</li>\n</ul>\n1.1.0\n<ul>\n  <li>New endpoint to retrieve a list of all applications. Supports pagination and filtering.</li>\n  <li>Webhooks: Added support for real-time event notifications. Users can now register listener URLs to receive automated updates on Application changes and\n    expired Estimations.\n  </li>\n</ul>\n1.0.0 initial release",
+      "type": "text/plain"
+    }
+  }
+}

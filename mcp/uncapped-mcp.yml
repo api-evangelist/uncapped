@@ -2,10 +2,9 @@ generated: '2026-07-21'
 method: derived
 status: candidate
 source: openapi/uncapped-partners-openapi-original.json
-description: >-
-  No official Uncapped MCP server was found (the Developer Hub's Scalar
-  reference explicitly disables its MCP feature). This is a candidate tool
-  list derived one-to-one from the published OpenAPI operations.
+description: No official Uncapped MCP server was found (the Developer Hub's Scalar reference explicitly
+  disables its MCP feature). This is a candidate tool list derived one-to-one from the published OpenAPI
+  operations.
 server:
   name: uncapped
   transport: http
@@ -53,3 +52,9 @@ tools:
 - name: delete_subscription
   description: Delete a webhook subscription
   source_operation: openapi/uncapped-partners-openapi-original.json#deleteSubscription
+deployment:
+  mode: none
+  verified: derived
+  tools: 14
+  checked: '2026-08-12'
+  source: catalog MCP census

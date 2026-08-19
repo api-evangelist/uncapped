@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "api-partners Applicants Authentication API",
+    "version": "1.4.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Issue access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.weareuncapped.com/api/partners/partner/authentication/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticates the partner using the provided JWT token and issues an access token. The access token can be used in the Authorization header as 'Bearer {accessToken}' for subsequent API calls."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

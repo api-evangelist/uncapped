@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "api-partners Applicants Estimations API",
+    "version": "1.4.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Estimations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate pre-offer estimations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.weareuncapped.com/api/partners/estimations/pre-offers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates pre-offer estimations based on partner applicant performance data.\n\n**Revenue Data:**\n- Submit revenue figures grouped by source (e.g., AMAZON, SHOPIFY)\n- Each source contains an array of revenue figures\n\n**Currency Determination:**\n- Currency is automatically determined from country code (e.g., USA→ USD)\n- Uses ISO 3166-1 alpha-2 to ISO 4217 mapping\n- Revenue currency from figures is used for calculations, but response currency comes from country\n\n**Partner Integration Guidelines:**\n-"
+        },
+        {
+          "info": {
+            "name": "Schedule pre-offer estimations batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.weareuncapped.com/api/partners/estimations/pre-offers/batch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedules a batch of pre-offer estimations based on partner applicant performance data.\n\n**Revenue Data:**\n- Submit revenue figures grouped by source (e.g., AMAZON, SHOPIFY)\n- Each source contains an array of revenue figures\n\n**Currency Determination:**\n- Currency is automatically determined from country code (e.g., USA→ USD)\n- Uses ISO 3166-1 alpha-2 to ISO 4217 mapping\n- Revenue currency from figures is used for calculations, but response currency comes from country\n\n**Partner Integration Guid"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

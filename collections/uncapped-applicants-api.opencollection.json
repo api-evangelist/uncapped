@@ -1,0 +1,186 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "api-partners Applicants API",
+    "version": "1.4.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Applicants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Enrich applicant details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dev.weareuncapped.com/api/partners/applicants/:partnerApplicantId/enrichment/details",
+            "params": [
+              {
+                "name": "partnerApplicantId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Allows partners to enrich applicant details by providing additional information.\n**Partner Integration Guidelines:**\n- Use ISO 8601 date format (yyyy-MM-dd)\n- Use ISO 3166-1 alpha-3 country codes and nationality (e.g., USA, CAN, GBR, POL)\n- Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)\n- Applicant user id is required when any related user details fields are provided (email, first name, last name, personal phone number,\ndate of birth, address)\n"
+        },
+        {
+          "info": {
+            "name": "Get applicant signals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.weareuncapped.com/api/partners/applicants/:partnerApplicantId/signals",
+            "params": [
+              {
+                "name": "partnerApplicantId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "partnerApplicantUserId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "highlights",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves signals associated with a specific applicant for a given partner."
+        },
+        {
+          "info": {
+            "name": "List pre-offer estimations for applicant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.weareuncapped.com/api/partners/applicants/:partnerApplicantId/estimations/pre-offers",
+            "params": [
+              {
+                "name": "partnerApplicantId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "productType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "stage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "createdDateFrom",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "createdDateTo",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page index (0..N)"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The size of the page to be returned"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all pre-offer estimations for the given applicant with optional filtering."
+        },
+        {
+          "info": {
+            "name": "List applications for applicant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.weareuncapped.com/api/partners/applicants/:partnerApplicantId/applications",
+            "params": [
+              {
+                "name": "partnerApplicantId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page index (0..N)"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The size of the page to be returned"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported."
+              }
+            ]
+          },
+          "docs": "Returns all applications for the given partnerApplicantId with optional status filtering and pagination."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

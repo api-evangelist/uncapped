@@ -1,0 +1,1433 @@
+{
+  "item": [
+    {
+      "id": "542f8dc5-a50c-40b8-bf54-41ae8cffd231",
+      "name": "Applicants",
+      "description": {
+        "content": "Applicant API for external access",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "85ed5d42-72e4-4cc4-bf74-2ed60e85a635",
+          "name": "Enrich applicant details",
+          "request": {
+            "name": "Enrich applicant details",
+            "description": {
+              "content": "Allows partners to enrich applicant details by providing additional information.\n**Partner Integration Guidelines:**\n- Use ISO 8601 date format (yyyy-MM-dd)\n- Use ISO 3166-1 alpha-3 country codes and nationality (e.g., USA, CAN, GBR, POL)\n- Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)\n- Applicant user id is required when any related user details fields are provided (email, first name, last name, personal phone number,\ndate of birth, address)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applicants",
+                ":partnerApplicantId",
+                "enrichment",
+                "details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "partnerApplicantId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"legalName\": \"<string>\",\n  \"companyRegistrationId\": \"<string>\",\n  \"mainRevenueSource\": \"<string>\",\n  \"mainStoreUrl\": \"<string>\",\n  \"address\": {\n    \"addressLine1\": \"<string>\",\n    \"addressLine2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"zip\": \"<string>\",\n    \"stateRegion\": \"<string>\",\n    \"country\": \"<string>\"\n  },\n  \"applicantUsers\": [\n    {\n      \"id\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "40b9d96e-40f0-4f9d-9b49-35fae0f3008b",
+              "name": "Enrichment successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "enrichment",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"legalName\": \"Test Company\",\n  \"companyRegistrationId\": \"company-registration-id\",\n  \"mainRevenueSource\": \"Amazon\",\n  \"mainStoreUrl\": \"https://www.amazon.com/store/test\",\n  \"address\": {\n    \"addressLine1\": \"Rode Drive 123\",\n    \"addressLine2\": null,\n    \"city\": \"Los Angeles\",\n    \"zip\": \"90001\",\n    \"stateRegion\": \"CA\",\n    \"country\": \"USA\"\n  },\n  \"applicantUsers\": [\n    {\n      \"id\": \"applicant-user-1\",\n      \"email\": \"john@email.com\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"personalPhoneNumber\": \"123-456-7890\",\n      \"dateOfBirth\": \"1990-01-01\",\n      \"nationality\": \"USA\",\n      \"address\": {\n        \"street\": \"123 Main St\",\n        \"buildingNumber\": \"5\",\n        \"apartmentNumber\": \"40\",\n        \"city\": \"Los Angeles\",\n        \"zip\": \"90001\",\n        \"stateRegion\": \"CA\",\n        \"country\": \"USA\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "475ee27d-3b0f-482a-b426-9c98a3892050",
+              "name": "Invalid request data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "enrichment",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"legalName\": \"Test Company\",\n  \"companyRegistrationId\": \"company-registration-id\",\n  \"mainRevenueSource\": \"Amazon\",\n  \"mainStoreUrl\": \"https://www.amazon.com/store/test\",\n  \"address\": {\n    \"addressLine1\": \"Rode Drive 123\",\n    \"addressLine2\": null,\n    \"city\": \"Los Angeles\",\n    \"zip\": \"90001\",\n    \"stateRegion\": \"CA\",\n    \"country\": \"USA\"\n  },\n  \"applicantUsers\": [\n    {\n      \"id\": \"applicant-user-1\",\n      \"email\": \"john@email.com\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"personalPhoneNumber\": \"123-456-7890\",\n      \"dateOfBirth\": \"1990-01-01\",\n      \"nationality\": \"USA\",\n      \"address\": {\n        \"street\": \"123 Main St\",\n        \"buildingNumber\": \"5\",\n        \"apartmentNumber\": \"40\",\n        \"city\": \"Los Angeles\",\n        \"zip\": \"90001\",\n        \"stateRegion\": \"CA\",\n        \"country\": \"USA\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6c61f1f-bbb3-4c86-b141-64d5101da2ab",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "enrichment",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"legalName\": \"Test Company\",\n  \"companyRegistrationId\": \"company-registration-id\",\n  \"mainRevenueSource\": \"Amazon\",\n  \"mainStoreUrl\": \"https://www.amazon.com/store/test\",\n  \"address\": {\n    \"addressLine1\": \"Rode Drive 123\",\n    \"addressLine2\": null,\n    \"city\": \"Los Angeles\",\n    \"zip\": \"90001\",\n    \"stateRegion\": \"CA\",\n    \"country\": \"USA\"\n  },\n  \"applicantUsers\": [\n    {\n      \"id\": \"applicant-user-1\",\n      \"email\": \"john@email.com\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"personalPhoneNumber\": \"123-456-7890\",\n      \"dateOfBirth\": \"1990-01-01\",\n      \"nationality\": \"USA\",\n      \"address\": {\n        \"street\": \"123 Main St\",\n        \"buildingNumber\": \"5\",\n        \"apartmentNumber\": \"40\",\n        \"city\": \"Los Angeles\",\n        \"zip\": \"90001\",\n        \"stateRegion\": \"CA\",\n        \"country\": \"USA\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "511fd7dc-b9eb-47e7-951c-0aa518f21012",
+              "name": "Applicant not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "enrichment",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"legalName\": \"Test Company\",\n  \"companyRegistrationId\": \"company-registration-id\",\n  \"mainRevenueSource\": \"Amazon\",\n  \"mainStoreUrl\": \"https://www.amazon.com/store/test\",\n  \"address\": {\n    \"addressLine1\": \"Rode Drive 123\",\n    \"addressLine2\": null,\n    \"city\": \"Los Angeles\",\n    \"zip\": \"90001\",\n    \"stateRegion\": \"CA\",\n    \"country\": \"USA\"\n  },\n  \"applicantUsers\": [\n    {\n      \"id\": \"applicant-user-1\",\n      \"email\": \"john@email.com\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"personalPhoneNumber\": \"123-456-7890\",\n      \"dateOfBirth\": \"1990-01-01\",\n      \"nationality\": \"USA\",\n      \"address\": {\n        \"street\": \"123 Main St\",\n        \"buildingNumber\": \"5\",\n        \"apartmentNumber\": \"40\",\n        \"city\": \"Los Angeles\",\n        \"zip\": \"90001\",\n        \"stateRegion\": \"CA\",\n        \"country\": \"USA\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e500b9b8-e91c-44c3-b794-735057248204",
+          "name": "Get applicant signals",
+          "request": {
+            "name": "Get applicant signals",
+            "description": {
+              "content": "Retrieves signals associated with a specific applicant for a given partner.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applicants",
+                ":partnerApplicantId",
+                "signals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "partnerApplicantUserId",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "en_US"
+                },
+                {
+                  "disabled": false,
+                  "key": "highlights",
+                  "value": "false"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "partnerApplicantId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93ee2670-00b8-4f67-9ba1-2d19d8156e9d",
+              "name": "Get signals",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "signals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partnerApplicantUserId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "en_US"
+                    },
+                    {
+                      "key": "highlights",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"type\": \"APPLICATION\",\n    \"productType\": \"MCA\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"titleTemplate\": \"string\",\n    \"descriptionTemplate\": \"string\",\n    \"highlights\": [\n      {\n        \"key\": \"string\",\n        \"label\": \"string\",\n        \"type\": \"text\",\n        \"value\": \"\"\n      },\n      {\n        \"key\": \"string\",\n        \"label\": \"string\",\n        \"type\": \"text\",\n        \"value\": \"\"\n      }\n    ],\n    \"action\": [\n      {\n        \"text\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"text\": \"string\",\n        \"url\": \"string\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"type\": \"APPLICATION\",\n    \"productType\": \"LOC\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"titleTemplate\": \"string\",\n    \"descriptionTemplate\": \"string\",\n    \"highlights\": [\n      {\n        \"key\": \"string\",\n        \"label\": \"string\",\n        \"type\": \"percent\",\n        \"value\": \"\"\n      },\n      {\n        \"key\": \"string\",\n        \"label\": \"string\",\n        \"type\": \"date\",\n        \"value\": \"\"\n      }\n    ],\n    \"action\": [\n      {\n        \"text\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"text\": \"string\",\n        \"url\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c30c6a8e-472c-4637-bb98-0d5128793200",
+              "name": "Invalid request data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "signals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partnerApplicantUserId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "en_US"
+                    },
+                    {
+                      "key": "highlights",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e723f59-d13c-4093-93de-fdd3a5cf1207",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "signals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "partnerApplicantUserId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "locale",
+                      "value": "en_US"
+                    },
+                    {
+                      "key": "highlights",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a83d626f-8171-4b7a-ba86-924ccd443410",
+          "name": "List pre-offer estimations for applicant",
+          "request": {
+            "name": "List pre-offer estimations for applicant",
+            "description": {
+              "content": "Returns a paginated list of all pre-offer estimations for the given applicant with optional filtering.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applicants",
+                ":partnerApplicantId",
+                "estimations",
+                "pre-offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "productType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "stage",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdDateFrom",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdDateTo",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Zero-based page index (0..N)"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The size of the page to be returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "createdAt,DESC",
+                  "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "partnerApplicantId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e64c4506-e519-41da-b2b5-d682a12f9192",
+              "name": "Pre-offer estimations found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "estimations",
+                    "pre-offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "productType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdDateFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "createdDateTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt,DESC"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"string\",\n      \"partnerApplicantId\": \"string\",\n      \"productType\": \"MCA\",\n      \"status\": \"ELIGIBILITY_DATA_INSUFFICIENT\",\n      \"createdDate\": \"2006-07-14T10:50:08.648Z\",\n      \"expirationDate\": \"1965-05-26\",\n      \"stage\": \"EXPIRED\",\n      \"maxAmount\": 7362.763464109541,\n      \"currency\": \"string\",\n      \"maxTerm\": \"string\",\n      \"maxMonthlyFee\": 7988.1428817715605,\n      \"minMonthlyFee\": 6821.839956885109\n    },\n    {\n      \"id\": \"string\",\n      \"partnerApplicantId\": \"string\",\n      \"productType\": \"MCA\",\n      \"status\": \"COOLING_PERIOD\",\n      \"createdDate\": \"1967-07-20T04:15:15.504Z\",\n      \"expirationDate\": \"1982-04-28\",\n      \"stage\": \"ACTIVE\",\n      \"maxAmount\": 7066.378101072046,\n      \"currency\": \"string\",\n      \"maxTerm\": \"string\",\n      \"maxMonthlyFee\": 3884.286099974814,\n      \"minMonthlyFee\": 8882.979675017088\n    }\n  ],\n  \"page\": 5304,\n  \"size\": 3129,\n  \"totalElements\": 4599,\n  \"totalPages\": 5365\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95663914-1a7e-40c4-89cd-0c6c9ca006f3",
+              "name": "Invalid request data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "estimations",
+                    "pre-offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "productType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdDateFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "createdDateTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt,DESC"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98ea7e1c-b351-453b-89d1-f05b73ca5fda",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "estimations",
+                    "pre-offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "productType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdDateFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "createdDateTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt,DESC"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc294a3b-b374-4efc-906e-6f71a49107ec",
+              "name": "Applicant not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "estimations",
+                    "pre-offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "productType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "stage",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdDateFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "createdDateTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt,DESC"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff8a8d20-fca5-40dd-bc1e-c0776ae47cd1",
+          "name": "List applications for applicant",
+          "request": {
+            "name": "List applications for applicant",
+            "description": {
+              "content": "Returns all applications for the given partnerApplicantId with optional status filtering and pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applicants",
+                ":partnerApplicantId",
+                "applications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "0",
+                  "description": "Zero-based page index (0..N)"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "The size of the page to be returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "createdAt,DESC",
+                  "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "partnerApplicantId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "17c3c5e9-5b15-4d05-a97b-f7b54ede146f",
+              "name": "Applications found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt,DESC"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"content\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"CREATED\",\n      \"partnerApplicantId\": \"string\",\n      \"estimationId\": \"string\",\n      \"createdDate\": \"1973-07-13T20:55:30.527Z\",\n      \"applicantUsers\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"ACTIVE\",\n      \"partnerApplicantId\": \"string\",\n      \"estimationId\": \"string\",\n      \"createdDate\": \"2013-02-09T10:06:56.102Z\",\n      \"applicantUsers\": [\n        {\n          \"id\": \"string\"\n        },\n        {\n          \"id\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"page\": 2717,\n  \"size\": 5895,\n  \"totalElements\": 7689,\n  \"totalPages\": 9961\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87780f07-946f-436a-80b8-8a59300048b1",
+              "name": "Invalid request data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt,DESC"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d6729a6-9645-4d6b-9bc6-fafc7d01d391",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt,DESC"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64530930-6725-4b68-bd90-b147da57feba",
+              "name": "Applicant not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applicants",
+                    ":partnerApplicantId",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt,DESC"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "partnerApplicantId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"code\": \"string\",\n  \"details\": [\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"fieldName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dev.weareuncapped.com/api/partners",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6b9eb8fe-020e-4f29-b88e-37f2cc3d3046",
+    "name": "api-partners Applicants API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Change log:<br>\n1.4.0 (2026-06-01)\n<ul>\n  <li>Signals: Added <code>productType</code> field to Signal response of <code>GET /applicants/{partnerApplicantId}/signals</code>. Values: <code>MCA</code>, <code>TERM_LOAN</code>, <code>LOC</code>.</li>\n</ul>\n1.3.0\n<ul>\n  <li>Webhooks: Added new event for completed batch estimations.</li>\n  <li>Applicants: Added endpoint to list pre-offer estimations for applicants.</li>\n  <li>Applicant Onboarding: Added asynchronous enrichment of applicant details after redirect journey to pre-fill onboarding data.</li>\n</ul>\n1.2.0\n<ul>\n  <li>Partners can now batch submit pre-offer estimations requests to pre-load Signals before applicants reach the UI.</li>\n</ul>\n1.1.0\n<ul>\n  <li>New endpoint to retrieve a list of all applications. Supports pagination and filtering.</li>\n  <li>Webhooks: Added support for real-time event notifications. Users can now register listener URLs to receive automated updates on Application changes and\n    expired Estimations.\n  </li>\n</ul>\n1.0.0 initial release",
+      "type": "text/plain"
+    }
+  }
+}

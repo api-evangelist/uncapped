@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "api-partners Applicants Applications API",
+    "version": "1.4.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get application details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.weareuncapped.com/api/partners/applications/:applicationId",
+            "params": [
+              {
+                "name": "applicationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves application details by application ID. Requires trusted or partner authorization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
