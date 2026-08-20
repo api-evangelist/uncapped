@@ -42,6 +42,14 @@ tags:
 - Embedded Finance
 - Revenue-Based Financing
 - Working Capital
+- E-Commerce
+tags_raw:
+- Company
+- Fintech
+- Lending
+- Embedded Finance
+- Revenue-Based Financing
+- Working Capital
 - eCommerce
 apis:
 - aid: uncapped:uncapped-applicants-api
@@ -62,6 +70,8 @@ apis:
   humanURL: https://developers.weareuncapped.com/api-reference
   baseURL: https://portal.weareuncapped.com/api/partners
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
