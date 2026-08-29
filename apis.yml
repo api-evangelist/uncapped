@@ -15,6 +15,17 @@ description: >-
   ready-to-use funding Signals in their UI, and reacting to application and
   estimation lifecycle events via webhooks.
 url: https://raw.githubusercontent.com/api-evangelist/uncapped/refs/heads/main/apis.yml
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
