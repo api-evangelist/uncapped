@@ -1,7 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: api-partners Applicants Estimations API
-  description: "Change log:<br>\n1.4.0 (2026-06-01)\n<ul>\n  <li>Signals: Added <code>productType</code> field to Signal response of <code>GET /applicants/{partnerApplicantId}/signals</code>. Values: <code>MCA</code>, <code>TERM_LOAN</code>, <code>LOC</code>.</li>\n</ul>\n1.3.0\n<ul>\n  <li>Webhooks: Added new event for completed batch estimations.</li>\n  <li>Applicants: Added endpoint to list pre-offer estimations for applicants.</li>\n  <li>Applicant Onboarding: Added asynchronous enrichment of applicant details after redirect journey to pre-fill onboarding data.</li>\n</ul>\n1.2.0\n<ul>\n  <li>Partners can now batch submit pre-offer estimations requests to pre-load Signals before applicants reach the UI.</li>\n</ul>\n1.1.0\n<ul>\n  <li>New endpoint to retrieve a list of all applications. Supports pagination and filtering.</li>\n  <li>Webhooks: Added support for real-time event notifications. Users can now register listener URLs to receive automated updates on Application changes and\n    expired Estimations.\n  </li>\n</ul>\n1.0.0 initial release"
+  title: api-partners Estimations API
+  description: 'Change log:
+
+
+    1.4.0 (2026-06-01)
+
+
+    Signals: Added productType field to Signal response of GET /applicants/{partnerApplicantId}/signals.'
   version: 1.4.0
 servers:
 - url: https://dev.weareuncapped.com/api/partners
@@ -48,9 +54,7 @@ paths:
 
         - Use ISO 3166-1 alpha-3 country codes (e.g., USA, CAN, GBR, POL)
 
-        - Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)
-
-        '
+        - Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)'
       operationId: generatePreOfferEstimation
       requestBody:
         content:
@@ -125,9 +129,7 @@ paths:
 
         - Use ISO 3166-1 alpha-3 country codes (e.g., USA, CAN, GBR, POL)
 
-        - Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)
-
-        '
+        - Use ISO 3166-2 state codes (e.g., CA, NY, TX, ON)'
       operationId: handlePreOfferEstimationBatch
       requestBody:
         content:
@@ -188,24 +190,18 @@ paths:
                 $ref: '#/components/schemas/PreOfferEstimationBatchResponse'
 components:
   schemas:
-    PreOfferEstimationResponse:
+    PreOfferEstimationRequest:
       type: object
       properties:
         partnerApplicantId:
           type: string
-        preOffersEstimations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreOfferEstimationDto'
-    CodeMessage:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        fieldName:
-          type: string
+          minLength: 1
+        applicantData:
+          $ref: '#/components/schemas/ApplicantData'
+        applicantPerformance:
+          $ref: '#/components/schemas/ApplicantPerformanceData'
+      required:
+      - partnerApplicantId
     RevenueSource:
       type: object
       properties:
@@ -220,13 +216,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RevenueFigure'
-    ApplicantPerformanceData:
-      type: object
-      properties:
-        revenueFigures:
-          type: array
-          items:
-            $ref: '#/components/schemas/RevenueSource'
     PreOfferEstimationDto:
       type: object
       properties:
@@ -266,18 +255,13 @@ components:
           type: number
         creditLimit:
           type: number
-    PreOfferEstimationRequest:
+    ApplicantPerformanceData:
       type: object
       properties:
-        partnerApplicantId:
-          type: string
-          minLength: 1
-        applicantData:
-          $ref: '#/components/schemas/ApplicantData'
-        applicantPerformance:
-          $ref: '#/components/schemas/ApplicantPerformanceData'
-      required:
-      - partnerApplicantId
+        revenueFigures:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevenueSource'
     ApplicantData:
       type: object
       properties:
@@ -293,13 +277,15 @@ components:
         state:
           type: string
           pattern: ^\p{Lu}{2}$
-    PreOfferEstimationBatchRequest:
+    PreOfferEstimationResponse:
       type: object
       properties:
-        estimationRequests:
+        partnerApplicantId:
+          type: string
+        preOffersEstimations:
           type: array
           items:
-            $ref: '#/components/schemas/PreOfferEstimationRequest'
+            $ref: '#/components/schemas/PreOfferEstimationDto'
     ErrorResponse:
       type: object
       properties:
@@ -311,12 +297,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeMessage'
-    PreOfferEstimationBatchResponse:
+    CodeMessage:
       type: object
       properties:
-        batchId:
+        code:
           type: string
-          format: uuid
+        message:
+          type: string
+        fieldName:
+          type: string
+    PreOfferEstimationBatchRequest:
+      type: object
+      properties:
+        estimationRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationRequest'
     RevenueFigure:
       type: object
       properties:
@@ -333,6 +329,12 @@ components:
       - amount
       - currency
       - date
+    PreOfferEstimationBatchResponse:
+      type: object
+      properties:
+        batchId:
+          type: string
+          format: uuid
   securitySchemes:
     auth0_bearer:
       type: http
