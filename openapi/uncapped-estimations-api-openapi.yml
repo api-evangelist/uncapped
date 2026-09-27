@@ -190,18 +190,6 @@ paths:
                 $ref: '#/components/schemas/PreOfferEstimationBatchResponse'
 components:
   schemas:
-    PreOfferEstimationRequest:
-      type: object
-      properties:
-        partnerApplicantId:
-          type: string
-          minLength: 1
-        applicantData:
-          $ref: '#/components/schemas/ApplicantData'
-        applicantPerformance:
-          $ref: '#/components/schemas/ApplicantPerformanceData'
-      required:
-      - partnerApplicantId
     RevenueSource:
       type: object
       properties:
@@ -216,6 +204,87 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RevenueFigure'
+    ApplicantPerformanceData:
+      type: object
+      properties:
+        revenueFigures:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevenueSource'
+    PreOfferEstimationRequest:
+      type: object
+      properties:
+        partnerApplicantId:
+          type: string
+          minLength: 1
+        applicantData:
+          $ref: '#/components/schemas/ApplicantData'
+        applicantPerformance:
+          $ref: '#/components/schemas/ApplicantPerformanceData'
+      required:
+      - partnerApplicantId
+    PreOfferEstimationBatchRequest:
+      type: object
+      properties:
+        estimationRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationRequest'
+    RevenueFigure:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        amount:
+          type: number
+          minimum: 0.0
+        currency:
+          type: string
+          pattern: ^[A-Z]{3}$
+      required:
+      - amount
+      - currency
+      - date
+    ApplicantData:
+      type: object
+      properties:
+        legalStructure:
+          type: string
+          enum:
+          - LLC
+          - Sole Proprietorship
+          - Unknown
+        country:
+          type: string
+          pattern: ^\p{Lu}{3}$
+        state:
+          type: string
+          pattern: ^\p{Lu}{2}$
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
+    PreOfferEstimationBatchResponse:
+      type: object
+      properties:
+        batchId:
+          type: string
+          format: uuid
+    PreOfferEstimationResponse:
+      type: object
+      properties:
+        partnerApplicantId:
+          type: string
+        preOffersEstimations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationDto'
     PreOfferEstimationDto:
       type: object
       properties:
@@ -255,37 +324,6 @@ components:
           type: number
         creditLimit:
           type: number
-    ApplicantPerformanceData:
-      type: object
-      properties:
-        revenueFigures:
-          type: array
-          items:
-            $ref: '#/components/schemas/RevenueSource'
-    ApplicantData:
-      type: object
-      properties:
-        legalStructure:
-          type: string
-          enum:
-          - LLC
-          - Sole Proprietorship
-          - Unknown
-        country:
-          type: string
-          pattern: ^\p{Lu}{3}$
-        state:
-          type: string
-          pattern: ^\p{Lu}{2}$
-    PreOfferEstimationResponse:
-      type: object
-      properties:
-        partnerApplicantId:
-          type: string
-        preOffersEstimations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreOfferEstimationDto'
     ErrorResponse:
       type: object
       properties:
@@ -297,44 +335,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeMessage'
-    CodeMessage:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        fieldName:
-          type: string
-    PreOfferEstimationBatchRequest:
-      type: object
-      properties:
-        estimationRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreOfferEstimationRequest'
-    RevenueFigure:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date
-        amount:
-          type: number
-          minimum: 0.0
-        currency:
-          type: string
-          pattern: ^[A-Z]{3}$
-      required:
-      - amount
-      - currency
-      - date
-    PreOfferEstimationBatchResponse:
-      type: object
-      properties:
-        batchId:
-          type: string
-          format: uuid
   securitySchemes:
     auth0_bearer:
       type: http

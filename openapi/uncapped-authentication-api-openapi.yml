@@ -65,15 +65,6 @@ components:
           minLength: 1
       required:
       - accessToken
-    CodeMessage:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        fieldName:
-          type: string
     ErrorResponse:
       type: object
       properties:
@@ -85,6 +76,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeMessage'
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
     TokenRequest:
       type: object
       properties:

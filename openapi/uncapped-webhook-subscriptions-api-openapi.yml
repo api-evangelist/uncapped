@@ -299,6 +299,48 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    WebhookSubscriptionPageableResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookSubscriptionResponse'
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    WebhookSubscriptionCreateRequest:
+      type: object
+      properties:
+        eventType:
+          type: string
+          enum:
+          - APPLICATION_STATUS_CHANGED
+          - ESTIMATION_EXPIRED
+          - ESTIMATION_BATCH_COMPLETED
+        url:
+          type: string
+          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
+      required:
+      - eventType
+    WebhookSubscriptionUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
+      required:
+      - url
     WebhookSubscriptionResponse:
       type: object
       properties:
@@ -321,15 +363,6 @@ components:
         updatedAt:
           type: string
           format: date-time
-    WebhookSubscriptionUpdateRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          minLength: 1
-          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
-      required:
-      - url
     CodeMessage:
       type: object
       properties:
@@ -339,25 +372,6 @@ components:
           type: string
         fieldName:
           type: string
-    WebhookSubscriptionPageableResponse:
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebhookSubscriptionResponse'
-        page:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        totalPages:
-          type: integer
-          format: int32
     ErrorResponse:
       type: object
       properties:
@@ -369,20 +383,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeMessage'
-    WebhookSubscriptionCreateRequest:
-      type: object
-      properties:
-        eventType:
-          type: string
-          enum:
-          - APPLICATION_STATUS_CHANGED
-          - ESTIMATION_EXPIRED
-          - ESTIMATION_BATCH_COMPLETED
-        url:
-          type: string
-          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
-      required:
-      - eventType
   securitySchemes:
     auth0_bearer:
       type: http

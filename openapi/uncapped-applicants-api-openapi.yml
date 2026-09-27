@@ -348,38 +348,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    Signal:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - PRE_OFFER
-          - APPLICATION
-        productType:
-          type: string
-          enum:
-          - MCA
-          - TERM_LOAN
-          - LOC
-        title:
-          type: string
-        description:
-          type: string
-        titleTemplate:
-          type: string
-        descriptionTemplate:
-          type: string
-        highlights:
-          type: array
-          items:
-            $ref: '#/components/schemas/SignalHighlight'
-        action:
-          type: array
-          items:
-            $ref: '#/components/schemas/SignalAction'
     ApplicationsPageResponse:
       type: object
       properties:
@@ -387,6 +355,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExternalApplicationListItemResponse'
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    PreOfferEstimationsPageResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationListItemResponse'
         page:
           type: integer
           format: int32
@@ -414,81 +401,6 @@ components:
           - percent
           - date
         value: {}
-    ExternalApplicationListItemResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-          enum:
-          - CREATED
-          - STARTED
-          - APPROVED
-          - REJECTED
-          - ACTIVE
-          - CLOSED
-          - ABANDONED
-        partnerApplicantId:
-          type: string
-        estimationId:
-          type: string
-        createdDate:
-          type: string
-          format: date-time
-        applicantUsers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicantUserDetails'
-    CodeMessage:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        fieldName:
-          type: string
-    PreOfferEstimationsPageResponse:
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreOfferEstimationListItemResponse'
-        page:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        totalPages:
-          type: integer
-          format: int32
-    CompanyAddressDetails:
-      type: object
-      properties:
-        addressLine1:
-          type: string
-        addressLine2:
-          type: string
-        city:
-          type: string
-        zip:
-          type: string
-        stateRegion:
-          type: string
-        country:
-          type: string
-          pattern: ^\p{Lu}{3}$
-    ApplicantUserDetails:
-      type: object
-      properties:
-        id:
-          type: string
     SignalAction:
       type: object
       properties:
@@ -496,6 +408,28 @@ components:
           type: string
         url:
           type: string
+    ApplicantEnrichmentRequest:
+      type: object
+      properties:
+        legalName:
+          type: string
+        companyRegistrationId:
+          type: string
+        mainRevenueSource:
+          type: string
+          enum:
+          - Amazon
+          - Shopify
+          - Walmart
+          - Unknown
+        mainStoreUrl:
+          type: string
+        address:
+          $ref: '#/components/schemas/CompanyAddressDetails'
+        applicantUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicantUserDetails'
     PreOfferEstimationListItemResponse:
       type: object
       properties:
@@ -542,6 +476,36 @@ components:
           type: number
         minMonthlyFee:
           type: number
+    CompanyAddressDetails:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        stateRegion:
+          type: string
+        country:
+          type: string
+          pattern: ^\p{Lu}{3}$
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
+    ApplicantUserDetails:
+      type: object
+      properties:
+        id:
+          type: string
     ErrorResponse:
       type: object
       properties:
@@ -553,24 +517,60 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeMessage'
-    ApplicantEnrichmentRequest:
+    Signal:
       type: object
       properties:
-        legalName:
+        id:
           type: string
-        companyRegistrationId:
-          type: string
-        mainRevenueSource:
+        type:
           type: string
           enum:
-          - Amazon
-          - Shopify
-          - Walmart
-          - Unknown
-        mainStoreUrl:
+          - PRE_OFFER
+          - APPLICATION
+        productType:
           type: string
-        address:
-          $ref: '#/components/schemas/CompanyAddressDetails'
+          enum:
+          - MCA
+          - TERM_LOAN
+          - LOC
+        title:
+          type: string
+        description:
+          type: string
+        titleTemplate:
+          type: string
+        descriptionTemplate:
+          type: string
+        highlights:
+          type: array
+          items:
+            $ref: '#/components/schemas/SignalHighlight'
+        action:
+          type: array
+          items:
+            $ref: '#/components/schemas/SignalAction'
+    ExternalApplicationListItemResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - CREATED
+          - STARTED
+          - APPROVED
+          - REJECTED
+          - ACTIVE
+          - CLOSED
+          - ABANDONED
+        partnerApplicantId:
+          type: string
+        estimationId:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
         applicantUsers:
           type: array
           items:
