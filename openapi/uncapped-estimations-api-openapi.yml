@@ -190,46 +190,21 @@ paths:
                 $ref: '#/components/schemas/PreOfferEstimationBatchResponse'
 components:
   schemas:
-    RevenueSource:
+    ApplicantData:
       type: object
       properties:
-        source:
+        legalStructure:
           type: string
           enum:
-          - Amazon
-          - Shopify
-          - Walmart
+          - LLC
+          - Sole Proprietorship
           - Unknown
-        figures:
-          type: array
-          items:
-            $ref: '#/components/schemas/RevenueFigure'
-    ApplicantPerformanceData:
-      type: object
-      properties:
-        revenueFigures:
-          type: array
-          items:
-            $ref: '#/components/schemas/RevenueSource'
-    PreOfferEstimationRequest:
-      type: object
-      properties:
-        partnerApplicantId:
+        country:
           type: string
-          minLength: 1
-        applicantData:
-          $ref: '#/components/schemas/ApplicantData'
-        applicantPerformance:
-          $ref: '#/components/schemas/ApplicantPerformanceData'
-      required:
-      - partnerApplicantId
-    PreOfferEstimationBatchRequest:
-      type: object
-      properties:
-        estimationRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreOfferEstimationRequest'
+          pattern: ^\p{Lu}{3}$
+        state:
+          type: string
+          pattern: ^\p{Lu}{2}$
     RevenueFigure:
       type: object
       properties:
@@ -246,21 +221,30 @@ components:
       - amount
       - currency
       - date
-    ApplicantData:
+    PreOfferEstimationBatchResponse:
       type: object
       properties:
-        legalStructure:
+        batchId:
           type: string
-          enum:
-          - LLC
-          - Sole Proprietorship
-          - Unknown
-        country:
+          format: uuid
+    ErrorResponse:
+      type: object
+      properties:
+        message:
           type: string
-          pattern: ^\p{Lu}{3}$
-        state:
+        code:
           type: string
-          pattern: ^\p{Lu}{2}$
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
+    PreOfferEstimationBatchRequest:
+      type: object
+      properties:
+        estimationRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationRequest'
     CodeMessage:
       type: object
       properties:
@@ -270,12 +254,6 @@ components:
           type: string
         fieldName:
           type: string
-    PreOfferEstimationBatchResponse:
-      type: object
-      properties:
-        batchId:
-          type: string
-          format: uuid
     PreOfferEstimationResponse:
       type: object
       properties:
@@ -285,6 +263,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PreOfferEstimationDto'
+    PreOfferEstimationRequest:
+      type: object
+      properties:
+        partnerApplicantId:
+          type: string
+          minLength: 1
+        applicantData:
+          $ref: '#/components/schemas/ApplicantData'
+        applicantPerformance:
+          $ref: '#/components/schemas/ApplicantPerformanceData'
+      required:
+      - partnerApplicantId
+    ApplicantPerformanceData:
+      type: object
+      properties:
+        revenueFigures:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevenueSource'
     PreOfferEstimationDto:
       type: object
       properties:
@@ -324,17 +321,20 @@ components:
           type: number
         creditLimit:
           type: number
-    ErrorResponse:
+    RevenueSource:
       type: object
       properties:
-        message:
+        source:
           type: string
-        code:
-          type: string
-        details:
+          enum:
+          - Amazon
+          - Shopify
+          - Walmart
+          - Unknown
+        figures:
           type: array
           items:
-            $ref: '#/components/schemas/CodeMessage'
+            $ref: '#/components/schemas/RevenueFigure'
   securitySchemes:
     auth0_bearer:
       type: http

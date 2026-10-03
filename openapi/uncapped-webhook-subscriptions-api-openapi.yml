@@ -299,25 +299,17 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    WebhookSubscriptionPageableResponse:
+    ErrorResponse:
       type: object
       properties:
-        content:
+        message:
+          type: string
+        code:
+          type: string
+        details:
           type: array
           items:
-            $ref: '#/components/schemas/WebhookSubscriptionResponse'
-        page:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        totalPages:
-          type: integer
-          format: int32
+            $ref: '#/components/schemas/CodeMessage'
     WebhookSubscriptionCreateRequest:
       type: object
       properties:
@@ -332,15 +324,15 @@ components:
           pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
       required:
       - eventType
-    WebhookSubscriptionUpdateRequest:
+    CodeMessage:
       type: object
       properties:
-        url:
+        code:
           type: string
-          minLength: 1
-          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
-      required:
-      - url
+        message:
+          type: string
+        fieldName:
+          type: string
     WebhookSubscriptionResponse:
       type: object
       properties:
@@ -363,26 +355,34 @@ components:
         updatedAt:
           type: string
           format: date-time
-    CodeMessage:
+    WebhookSubscriptionPageableResponse:
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-        fieldName:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-        details:
+        content:
           type: array
           items:
-            $ref: '#/components/schemas/CodeMessage'
+            $ref: '#/components/schemas/WebhookSubscriptionResponse'
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    WebhookSubscriptionUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
+      required:
+      - url
   securitySchemes:
     auth0_bearer:
       type: http

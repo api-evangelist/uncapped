@@ -56,30 +56,10 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/CodeMessage'
     ApplicantUserDetails:
       type: object
       properties:
         id:
-          type: string
-    CodeMessage:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        fieldName:
           type: string
     ExternalApplicationDetailsResponse:
       type: object
@@ -104,6 +84,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicantUserDetails'
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
   securitySchemes:
     auth0_bearer:
       type: http

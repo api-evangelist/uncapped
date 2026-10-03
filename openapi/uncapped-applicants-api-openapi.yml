@@ -367,6 +367,26 @@ components:
         totalPages:
           type: integer
           format: int32
+    SignalHighlight:
+      type: object
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        type:
+          type: string
+          enum:
+          - text
+          - money
+          - percent
+          - date
+        value: {}
+    ApplicantUserDetails:
+      type: object
+      properties:
+        id:
+          type: string
     PreOfferEstimationsPageResponse:
       type: object
       properties:
@@ -386,27 +406,99 @@ components:
         totalPages:
           type: integer
           format: int32
-    SignalHighlight:
+    ErrorResponse:
       type: object
       properties:
-        key:
+        message:
           type: string
-        label:
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
+    ExternalApplicationListItemResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - CREATED
+          - STARTED
+          - APPROVED
+          - REJECTED
+          - ACTIVE
+          - CLOSED
+          - ABANDONED
+        partnerApplicantId:
+          type: string
+        estimationId:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        applicantUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicantUserDetails'
+    Signal:
+      type: object
+      properties:
+        id:
           type: string
         type:
           type: string
           enum:
-          - text
-          - money
-          - percent
-          - date
-        value: {}
-    SignalAction:
+          - PRE_OFFER
+          - APPLICATION
+        productType:
+          type: string
+          enum:
+          - MCA
+          - TERM_LOAN
+          - LOC
+        title:
+          type: string
+        description:
+          type: string
+        titleTemplate:
+          type: string
+        descriptionTemplate:
+          type: string
+        highlights:
+          type: array
+          items:
+            $ref: '#/components/schemas/SignalHighlight'
+        action:
+          type: array
+          items:
+            $ref: '#/components/schemas/SignalAction'
+    CompanyAddressDetails:
       type: object
       properties:
-        text:
+        addressLine1:
           type: string
-        url:
+        addressLine2:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        stateRegion:
+          type: string
+        country:
+          type: string
+          pattern: ^\p{Lu}{3}$
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
           type: string
     ApplicantEnrichmentRequest:
       type: object
@@ -476,105 +568,13 @@ components:
           type: number
         minMonthlyFee:
           type: number
-    CompanyAddressDetails:
+    SignalAction:
       type: object
       properties:
-        addressLine1:
+        text:
           type: string
-        addressLine2:
+        url:
           type: string
-        city:
-          type: string
-        zip:
-          type: string
-        stateRegion:
-          type: string
-        country:
-          type: string
-          pattern: ^\p{Lu}{3}$
-    CodeMessage:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        fieldName:
-          type: string
-    ApplicantUserDetails:
-      type: object
-      properties:
-        id:
-          type: string
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/CodeMessage'
-    Signal:
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          enum:
-          - PRE_OFFER
-          - APPLICATION
-        productType:
-          type: string
-          enum:
-          - MCA
-          - TERM_LOAN
-          - LOC
-        title:
-          type: string
-        description:
-          type: string
-        titleTemplate:
-          type: string
-        descriptionTemplate:
-          type: string
-        highlights:
-          type: array
-          items:
-            $ref: '#/components/schemas/SignalHighlight'
-        action:
-          type: array
-          items:
-            $ref: '#/components/schemas/SignalAction'
-    ExternalApplicationListItemResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-          enum:
-          - CREATED
-          - STARTED
-          - APPROVED
-          - REJECTED
-          - ACTIVE
-          - CLOSED
-          - ABANDONED
-        partnerApplicantId:
-          type: string
-        estimationId:
-          type: string
-        createdDate:
-          type: string
-          format: date-time
-        applicantUsers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicantUserDetails'
   securitySchemes:
     auth0_bearer:
       type: http
