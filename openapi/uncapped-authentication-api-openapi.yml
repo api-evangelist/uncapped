@@ -57,6 +57,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
     TokenResponse:
       type: object
       properties:
@@ -73,15 +82,6 @@ components:
           minLength: 1
       required:
       - token
-    CodeMessage:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        fieldName:
-          type: string
     ErrorResponse:
       type: object
       properties:

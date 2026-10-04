@@ -190,6 +190,72 @@ paths:
                 $ref: '#/components/schemas/PreOfferEstimationBatchResponse'
 components:
   schemas:
+    RevenueSource:
+      type: object
+      properties:
+        source:
+          type: string
+          enum:
+          - Amazon
+          - Shopify
+          - Walmart
+          - Unknown
+        figures:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevenueFigure'
+    PreOfferEstimationResponse:
+      type: object
+      properties:
+        partnerApplicantId:
+          type: string
+        preOffersEstimations:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationDto'
+    ApplicantPerformanceData:
+      type: object
+      properties:
+        revenueFigures:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevenueSource'
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
+    PreOfferEstimationBatchResponse:
+      type: object
+      properties:
+        batchId:
+          type: string
+          format: uuid
+    PreOfferEstimationBatchRequest:
+      type: object
+      properties:
+        estimationRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationRequest'
+    PreOfferEstimationRequest:
+      type: object
+      properties:
+        partnerApplicantId:
+          type: string
+          minLength: 1
+        applicantData:
+          $ref: '#/components/schemas/ApplicantData'
+        applicantPerformance:
+          $ref: '#/components/schemas/ApplicantPerformanceData'
+      required:
+      - partnerApplicantId
     ApplicantData:
       type: object
       properties:
@@ -221,67 +287,6 @@ components:
       - amount
       - currency
       - date
-    PreOfferEstimationBatchResponse:
-      type: object
-      properties:
-        batchId:
-          type: string
-          format: uuid
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/CodeMessage'
-    PreOfferEstimationBatchRequest:
-      type: object
-      properties:
-        estimationRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreOfferEstimationRequest'
-    CodeMessage:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        fieldName:
-          type: string
-    PreOfferEstimationResponse:
-      type: object
-      properties:
-        partnerApplicantId:
-          type: string
-        preOffersEstimations:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreOfferEstimationDto'
-    PreOfferEstimationRequest:
-      type: object
-      properties:
-        partnerApplicantId:
-          type: string
-          minLength: 1
-        applicantData:
-          $ref: '#/components/schemas/ApplicantData'
-        applicantPerformance:
-          $ref: '#/components/schemas/ApplicantPerformanceData'
-      required:
-      - partnerApplicantId
-    ApplicantPerformanceData:
-      type: object
-      properties:
-        revenueFigures:
-          type: array
-          items:
-            $ref: '#/components/schemas/RevenueSource'
     PreOfferEstimationDto:
       type: object
       properties:
@@ -321,20 +326,15 @@ components:
           type: number
         creditLimit:
           type: number
-    RevenueSource:
+    CodeMessage:
       type: object
       properties:
-        source:
+        code:
           type: string
-          enum:
-          - Amazon
-          - Shopify
-          - Walmart
-          - Unknown
-        figures:
-          type: array
-          items:
-            $ref: '#/components/schemas/RevenueFigure'
+        message:
+          type: string
+        fieldName:
+          type: string
   securitySchemes:
     auth0_bearer:
       type: http

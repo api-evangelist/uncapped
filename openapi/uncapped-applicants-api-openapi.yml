@@ -348,25 +348,90 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ApplicationsPageResponse:
+    ApplicantEnrichmentRequest:
       type: object
       properties:
-        content:
+        legalName:
+          type: string
+        companyRegistrationId:
+          type: string
+        mainRevenueSource:
+          type: string
+          enum:
+          - Amazon
+          - Shopify
+          - Walmart
+          - Unknown
+        mainStoreUrl:
+          type: string
+        address:
+          $ref: '#/components/schemas/CompanyAddressDetails'
+        applicantUsers:
           type: array
           items:
-            $ref: '#/components/schemas/ExternalApplicationListItemResponse'
-        page:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        totalPages:
-          type: integer
-          format: int32
+            $ref: '#/components/schemas/ApplicantUserDetails'
+    CompanyAddressDetails:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        stateRegion:
+          type: string
+        country:
+          type: string
+          pattern: ^\p{Lu}{3}$
+    PreOfferEstimationListItemResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        partnerApplicantId:
+          type: string
+        productType:
+          type: string
+          enum:
+          - MCA
+          - TERM_LOAN
+          - LOC
+        status:
+          type: string
+          enum:
+          - ELIGIBILITY_COMPLETE_DATA
+          - ELIGIBILITY_MINIMAL_DATA
+          - ELIGIBILITY_PENDING_VERIFICATION
+          - ELIGIBILITY_UNDEFINED
+          - ELIGIBILITY_DATA_INSUFFICIENT
+          - NON_ELIGIBLE
+          - COOLING_PERIOD
+        createdDate:
+          type: string
+          format: date-time
+        expirationDate:
+          type: string
+          format: date
+        stage:
+          type: string
+          enum:
+          - ACTIVE
+          - EXPIRED
+          - SUPERSEDED
+          - CONVERTED
+        maxAmount:
+          type: number
+        currency:
+          type: string
+        maxTerm:
+          type: string
+        maxMonthlyFee:
+          type: number
+        minMonthlyFee:
+          type: number
     SignalHighlight:
       type: object
       properties:
@@ -382,10 +447,23 @@ components:
           - percent
           - date
         value: {}
-    ApplicantUserDetails:
+    ErrorResponse:
       type: object
       properties:
-        id:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
+    SignalAction:
+      type: object
+      properties:
+        text:
+          type: string
+        url:
           type: string
     PreOfferEstimationsPageResponse:
       type: object
@@ -406,17 +484,6 @@ components:
         totalPages:
           type: integer
           format: int32
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/CodeMessage'
     ExternalApplicationListItemResponse:
       type: object
       properties:
@@ -475,22 +542,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SignalAction'
-    CompanyAddressDetails:
+    ApplicationsPageResponse:
       type: object
       properties:
-        addressLine1:
-          type: string
-        addressLine2:
-          type: string
-        city:
-          type: string
-        zip:
-          type: string
-        stateRegion:
-          type: string
-        country:
-          type: string
-          pattern: ^\p{Lu}{3}$
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalApplicationListItemResponse'
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
     CodeMessage:
       type: object
       properties:
@@ -500,80 +570,10 @@ components:
           type: string
         fieldName:
           type: string
-    ApplicantEnrichmentRequest:
-      type: object
-      properties:
-        legalName:
-          type: string
-        companyRegistrationId:
-          type: string
-        mainRevenueSource:
-          type: string
-          enum:
-          - Amazon
-          - Shopify
-          - Walmart
-          - Unknown
-        mainStoreUrl:
-          type: string
-        address:
-          $ref: '#/components/schemas/CompanyAddressDetails'
-        applicantUsers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicantUserDetails'
-    PreOfferEstimationListItemResponse:
+    ApplicantUserDetails:
       type: object
       properties:
         id:
-          type: string
-        partnerApplicantId:
-          type: string
-        productType:
-          type: string
-          enum:
-          - MCA
-          - TERM_LOAN
-          - LOC
-        status:
-          type: string
-          enum:
-          - ELIGIBILITY_COMPLETE_DATA
-          - ELIGIBILITY_MINIMAL_DATA
-          - ELIGIBILITY_PENDING_VERIFICATION
-          - ELIGIBILITY_UNDEFINED
-          - ELIGIBILITY_DATA_INSUFFICIENT
-          - NON_ELIGIBLE
-          - COOLING_PERIOD
-        createdDate:
-          type: string
-          format: date-time
-        expirationDate:
-          type: string
-          format: date
-        stage:
-          type: string
-          enum:
-          - ACTIVE
-          - EXPIRED
-          - SUPERSEDED
-          - CONVERTED
-        maxAmount:
-          type: number
-        currency:
-          type: string
-        maxTerm:
-          type: string
-        maxMonthlyFee:
-          type: number
-        minMonthlyFee:
-          type: number
-    SignalAction:
-      type: object
-      properties:
-        text:
-          type: string
-        url:
           type: string
   securitySchemes:
     auth0_bearer:
