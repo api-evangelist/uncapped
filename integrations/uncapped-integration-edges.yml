@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/uncapped/integrations
+- https://n8n.io/integrations/uncapped/
+- https://composio.dev/toolkits/uncapped
+- https://monid.ai/tools/uncapped
+checked:
+- https://composio.dev/toolkits/uncapped
+- https://monid.ai/tools/uncapped
+- https://n8n.io/integrations/uncapped/
+- https://zapier.com/apps/uncapped/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
