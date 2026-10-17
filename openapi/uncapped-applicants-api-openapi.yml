@@ -348,44 +348,11 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ApplicantEnrichmentRequest:
+    ApplicantUserDetails:
       type: object
       properties:
-        legalName:
+        id:
           type: string
-        companyRegistrationId:
-          type: string
-        mainRevenueSource:
-          type: string
-          enum:
-          - Amazon
-          - Shopify
-          - Walmart
-          - Unknown
-        mainStoreUrl:
-          type: string
-        address:
-          $ref: '#/components/schemas/CompanyAddressDetails'
-        applicantUsers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicantUserDetails'
-    CompanyAddressDetails:
-      type: object
-      properties:
-        addressLine1:
-          type: string
-        addressLine2:
-          type: string
-        city:
-          type: string
-        zip:
-          type: string
-        stateRegion:
-          type: string
-        country:
-          type: string
-          pattern: ^\p{Lu}{3}$
     PreOfferEstimationListItemResponse:
       type: object
       properties:
@@ -432,6 +399,17 @@ components:
           type: number
         minMonthlyFee:
           type: number
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
     SignalHighlight:
       type: object
       properties:
@@ -447,43 +425,37 @@ components:
           - percent
           - date
         value: {}
-    ErrorResponse:
+    ApplicantEnrichmentRequest:
       type: object
       properties:
-        message:
+        legalName:
           type: string
+        companyRegistrationId:
+          type: string
+        mainRevenueSource:
+          type: string
+          enum:
+          - Amazon
+          - Shopify
+          - Walmart
+          - Unknown
+        mainStoreUrl:
+          type: string
+        address:
+          $ref: '#/components/schemas/CompanyAddressDetails'
+        applicantUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicantUserDetails'
+    CodeMessage:
+      type: object
+      properties:
         code:
           type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/CodeMessage'
-    SignalAction:
-      type: object
-      properties:
-        text:
+        message:
           type: string
-        url:
+        fieldName:
           type: string
-    PreOfferEstimationsPageResponse:
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreOfferEstimationListItemResponse'
-        page:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        totalPages:
-          type: integer
-          format: int32
     ExternalApplicationListItemResponse:
       type: object
       properties:
@@ -542,6 +514,32 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SignalAction'
+    PreOfferEstimationsPageResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationListItemResponse'
+        page:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    SignalAction:
+      type: object
+      properties:
+        text:
+          type: string
+        url:
+          type: string
     ApplicationsPageResponse:
       type: object
       properties:
@@ -561,20 +559,22 @@ components:
         totalPages:
           type: integer
           format: int32
-    CodeMessage:
+    CompanyAddressDetails:
       type: object
       properties:
-        code:
+        addressLine1:
           type: string
-        message:
+        addressLine2:
           type: string
-        fieldName:
+        city:
           type: string
-    ApplicantUserDetails:
-      type: object
-      properties:
-        id:
+        zip:
           type: string
+        stateRegion:
+          type: string
+        country:
+          type: string
+          pattern: ^\p{Lu}{3}$
   securitySchemes:
     auth0_bearer:
       type: http

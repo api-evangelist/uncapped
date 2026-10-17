@@ -299,37 +299,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    WebhookSubscriptionUpdateRequest:
-      type: object
-      properties:
-        url:
-          type: string
-          minLength: 1
-          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
-      required:
-      - url
-    WebhookSubscriptionResponse:
-      type: object
-      properties:
-        eventType:
-          type: string
-          enum:
-          - APPLICATION_STATUS_CHANGED
-          - ESTIMATION_EXPIRED
-          - ESTIMATION_BATCH_COMPLETED
-        url:
-          type: string
-        status:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
     ErrorResponse:
       type: object
       properties:
@@ -341,6 +310,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeMessage'
+    CodeMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fieldName:
+          type: string
     WebhookSubscriptionCreateRequest:
       type: object
       properties:
@@ -374,15 +352,37 @@ components:
         totalPages:
           type: integer
           format: int32
-    CodeMessage:
+    WebhookSubscriptionResponse:
       type: object
       properties:
-        code:
+        eventType:
           type: string
-        message:
+          enum:
+          - APPLICATION_STATUS_CHANGED
+          - ESTIMATION_EXPIRED
+          - ESTIMATION_BATCH_COMPLETED
+        url:
           type: string
-        fieldName:
+        status:
           type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    WebhookSubscriptionUpdateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+          pattern: ^(https?:\/\/)?(www\.)?([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,10}|localhost)(:[0-9]{1,5})?(\/.*)?$
+      required:
+      - url
   securitySchemes:
     auth0_bearer:
       type: http

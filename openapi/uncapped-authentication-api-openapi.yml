@@ -66,6 +66,17 @@ components:
           type: string
         fieldName:
           type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeMessage'
     TokenResponse:
       type: object
       properties:
@@ -82,17 +93,6 @@ components:
           minLength: 1
       required:
       - token
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/CodeMessage'
   securitySchemes:
     auth0_bearer:
       type: http

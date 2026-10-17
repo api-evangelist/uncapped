@@ -65,6 +65,11 @@ components:
           type: string
         fieldName:
           type: string
+    ApplicantUserDetails:
+      type: object
+      properties:
+        id:
+          type: string
     ErrorResponse:
       type: object
       properties:
@@ -99,11 +104,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicantUserDetails'
-    ApplicantUserDetails:
-      type: object
-      properties:
-        id:
-          type: string
   securitySchemes:
     auth0_bearer:
       type: http

@@ -190,20 +190,13 @@ paths:
                 $ref: '#/components/schemas/PreOfferEstimationBatchResponse'
 components:
   schemas:
-    RevenueSource:
+    ApplicantPerformanceData:
       type: object
       properties:
-        source:
-          type: string
-          enum:
-          - Amazon
-          - Shopify
-          - Walmart
-          - Unknown
-        figures:
+        revenueFigures:
           type: array
           items:
-            $ref: '#/components/schemas/RevenueFigure'
+            $ref: '#/components/schemas/RevenueSource'
     PreOfferEstimationResponse:
       type: object
       properties:
@@ -213,13 +206,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PreOfferEstimationDto'
-    ApplicantPerformanceData:
-      type: object
-      properties:
-        revenueFigures:
-          type: array
-          items:
-            $ref: '#/components/schemas/RevenueSource'
     ErrorResponse:
       type: object
       properties:
@@ -231,46 +217,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeMessage'
-    PreOfferEstimationBatchResponse:
-      type: object
-      properties:
-        batchId:
-          type: string
-          format: uuid
-    PreOfferEstimationBatchRequest:
-      type: object
-      properties:
-        estimationRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreOfferEstimationRequest'
-    PreOfferEstimationRequest:
-      type: object
-      properties:
-        partnerApplicantId:
-          type: string
-          minLength: 1
-        applicantData:
-          $ref: '#/components/schemas/ApplicantData'
-        applicantPerformance:
-          $ref: '#/components/schemas/ApplicantPerformanceData'
-      required:
-      - partnerApplicantId
-    ApplicantData:
-      type: object
-      properties:
-        legalStructure:
-          type: string
-          enum:
-          - LLC
-          - Sole Proprietorship
-          - Unknown
-        country:
-          type: string
-          pattern: ^\p{Lu}{3}$
-        state:
-          type: string
-          pattern: ^\p{Lu}{2}$
     RevenueFigure:
       type: object
       properties:
@@ -335,6 +281,60 @@ components:
           type: string
         fieldName:
           type: string
+    PreOfferEstimationRequest:
+      type: object
+      properties:
+        partnerApplicantId:
+          type: string
+          minLength: 1
+        applicantData:
+          $ref: '#/components/schemas/ApplicantData'
+        applicantPerformance:
+          $ref: '#/components/schemas/ApplicantPerformanceData'
+      required:
+      - partnerApplicantId
+    PreOfferEstimationBatchResponse:
+      type: object
+      properties:
+        batchId:
+          type: string
+          format: uuid
+    PreOfferEstimationBatchRequest:
+      type: object
+      properties:
+        estimationRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreOfferEstimationRequest'
+    ApplicantData:
+      type: object
+      properties:
+        legalStructure:
+          type: string
+          enum:
+          - LLC
+          - Sole Proprietorship
+          - Unknown
+        country:
+          type: string
+          pattern: ^\p{Lu}{3}$
+        state:
+          type: string
+          pattern: ^\p{Lu}{2}$
+    RevenueSource:
+      type: object
+      properties:
+        source:
+          type: string
+          enum:
+          - Amazon
+          - Shopify
+          - Walmart
+          - Unknown
+        figures:
+          type: array
+          items:
+            $ref: '#/components/schemas/RevenueFigure'
   securitySchemes:
     auth0_bearer:
       type: http
