@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/uncapped/integrations
 - https://n8n.io/integrations/uncapped/
@@ -10,7 +10,25 @@ checked:
 - https://monid.ai/tools/uncapped
 - https://n8n.io/integrations/uncapped/
 - https://zapier.com/apps/uncapped/integrations
+- bigcommerce/integrations/bigcommerce-integration-edges.yml
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: BigCommerce (own)
+  partner: bigcommerce
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.bigcommerce.com/apps/uncapped/
+  mirror_of: bigcommerce/integrations/bigcommerce-integration-edges.yml
+  apps:
+  - Uncapped
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: Financing, Merchant Financing
 templates: []
