@@ -64,6 +64,128 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Uncapped is a company surfaced as a portfolio company of seedcamp and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Uncapped provides working capital to online businesses, offering revenue-based financing products including merchant cash advances (MCA), term loans, and lines of credit (LOC). Through the Uncapped Partners API, platforms and marketplaces can embed business funding directly into their product without taking on origination, compliance, or servicing - submitting anonymised applicant performance data, generating pre-offer estimations, displaying ready-to-use funding Signals in their UI, and reacting to application and estimation lifecycle events via webhooks.
 
-Backed by: seedcamp — http://weareuncapped.com
+**Areas:** Company · Fintech · Lending · Embedded Finance · Revenue-Based Financing · Working Capital · E-Commerce
+
+## Uncapped on APIs.io
+
+Everything profiled for Uncapped is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/uncapped/](https://apis.io/providers/uncapped/)** — or go straight to one of the APIs or properties below.
+
+### APIs (5)
+
+- [Uncapped Applicants API](https://apis.io/apis/uncapped/uncapped-applicants-api/) — Applicant API for external access
+- [Uncapped Applications API](https://apis.io/apis/uncapped/uncapped-applications-api/) — Application API for external access
+- [Uncapped Authentication API](https://apis.io/apis/uncapped/uncapped-authentication-api/) — Authentication API for external access
+- [Uncapped Estimations API](https://apis.io/apis/uncapped/uncapped-estimations-api/) — Estimations API for external access
+- [Uncapped Webhook Subscriptions API](https://apis.io/apis/uncapped/uncapped-webhook-subscriptions-api/) — Webhook Subscriptions API for external access
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Uncapped Webhooks](https://apis.io/asyncapis/uncapped/uncapped-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [uncapped](https://apis.io/servers/uncapped/uncapped/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Uncapped Agentic Access](https://apis.io/agentic-access/uncapped/uncapped-agentic-access/)
+
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [api-partners Applicants API](https://apis.io/collections/uncapped/open-uncapped-applicants-api/)
+- [api-partners Applicants Applications API](https://apis.io/collections/uncapped/open-uncapped-applications-api/)
+- [api-partners Applicants Authentication API](https://apis.io/collections/uncapped/open-uncapped-authentication-api/)
+- [api-partners Applicants Estimations API](https://apis.io/collections/uncapped/open-uncapped-estimations-api/)
+- [api-partners Applicants Webhook Subscriptions API](https://apis.io/collections/uncapped/open-uncapped-webhook-subscriptions-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Uncapped Partners Overlay](https://apis.io/overlays/uncapped/uncapped-partners-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Uncapped Authentication](https://apis.io/security/uncapped/uncapped-authentication/)
+- [Uncapped Domain Security](https://apis.io/security/uncapped/uncapped-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://weareuncapped.com)
+- [Documentation](https://developers.weareuncapped.com/guides)
+- [Getting started](https://developers.weareuncapped.com/guides)
+- [API reference](https://developers.weareuncapped.com/api-reference)
+- [Blog](https://weareuncapped.com/blog)
+- [GitHub](https://github.com/weareuncapped-com)
+- [Status](https://status.weareuncapped.com)
+
+## API Evangelist rating
+
+**Kin Score 31.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 60.8 |
+| Contract governance | 4.5 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 23.2 |
+| Access clarity | 0.0 |
+
+**Agent readiness 30.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/uncapped/](https://apis.io/providers/uncapped/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Uncapped: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/uncapped/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
